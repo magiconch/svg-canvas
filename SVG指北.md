@@ -198,9 +198,12 @@ T	| xy	| 从目前点的座标画条反射二次贝兹曲线到指定点的x, y 
 A	| rx ry x-axis-rotation large-arc-flag sweep-flag xy	| 从目前点的座标画个椭圆形到指定点的x, y 座标：其中rx, ry 为椭圆形的x 轴及y 轴的半径，x-axis-rotation 是弧线与x 轴的旋转角度，large- arc-flag 则设定1 最大角度的弧线或是0 最小角度的弧线，sweep-flag 设定方向为1 顺时针方向或0 逆时针方向( Arc )
 Z	| |	关闭路径，将目前点的座标与第一个点的座标连接起来( closepath )
 
-光看怎么能记得住,尝试写一个demo吧.
+光看怎么能记得住,尝试写一个demo吧. 
+
+[demo](https://github.com/magiconch/svg-canvas/blob/master/simpledemo.html)
 
 这个H和V的单位是什么?
+
 ## 一些练习
 
 ### 练习1. 根据表格画出折线图
