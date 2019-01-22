@@ -200,7 +200,7 @@ Z	| |	关闭路径，将目前点的座标与第一个点的座标连接起来( 
 
 光看怎么能记得住,尝试写一个demo吧.
 
-
+这个H和V的单位是什么?
 ## 一些练习
 
 ### 练习1. 根据表格画出折线图
@@ -241,7 +241,6 @@ inline SVG | 支持资源外链  支持CSS 支持JS
 ```html
 <svg width="300" height="180">
   <circle cx="30"  cy="50" r="25" />
-  <>
   <circle cx="90"  cy="50" r="25"  class="red" />
   <circle cx="150" cy="50" r="25" class="fancy" />
 </svg>
