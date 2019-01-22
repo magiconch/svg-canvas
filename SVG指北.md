@@ -1,0 +1,243 @@
+# SVG 入门
+
+## 什么是SVG
+
+SVG 是一种基于 XML 语法的图像格式，全称是可缩放矢量图（Scalable Vector Graphics）。其他图像格式都是基于像素处理的，SVG 则是属于对图像的形状描述，所以它本质上是文本文件，体积较小，且不管放大多少倍都不会失真。
+
+## SVG的优劣
+
+### 相对于png和jpg,它的优势是
+
+但是人无完人,也没有绝对的好标准.相对于png来讲,如果图片特别复杂,SVG所需要的大小是远远大于jpg等的.
+
+为了证明网上的观点,我从维基百科上下载了一份莫奈的<印象 日出>,你可以[点击这里](),你会发现,作为jpg版本的图片大小只有1.8mb,而转换成的SVG图片,大小足足为4.9mb.这是由于是svg其本质是利用向量(Vector)来描述图片,对于简单的图片而言,其可以使用很少的向量来描述,所以大小优于使用像素来描述的其他格式.
+
+### 过时的缺点:
+有很多以前的前辈学习SVG时候各大浏览器对其的支持度还不容乐观,但是在今天(2019年1.22),它的支持度已经达到95%以上了.你可以点击下面的链接查看支持度:
+
+ [支持度](https://caniuse.com/#search=svg)
+
+## 开始使用
+
+元素本身宽高
+
+画布决定了能画多少大小的东西,如果不指定的话,就会造成图形莫名其妙的消失.但是利用这种特性,我们也可以实现很多切割后的形状.但是
+
+xmls属性
+
+SVG有着丰富的展示方式
+
+- SVG 文件可以直接插入网页，成为 DOM 的一部分，然后用 JavaScript 和 CSS 进行操作,像这样 :
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A page</title>
+  </head>
+  <body>
+    <svg width="10" height="10">
+      <rect x="0" y="0" width="100" height="100" fill="blue" />
+    </svg>
+  </body>
+</html>
+```
+在 HTLM 中内联 SVG 的功能使该格式成为场景中的 unicorn,因为其他图像不能这样做，必须为每个图像打开一个单独的请求来获取该格式。
+
+- 将它们包含在一个 img 标签中来显示：
+```html
+<img src="image.svg" alt="My SVG image" />
+```
+
+```html
+
+```
+
+（1）使用 `<embed>` 标签
+
+优势：所有主要浏览器都支持，并允许使用脚本
+缺点：不推荐在HTML4和XHTML中使用（但在HTML5允许）
+示例：
+```html
+<embed width="300px" height="300px" src="img/demo.svg" type="image/svg+xml" />
+```
+（2）使用 `<object>` 标签
+
+优势：所有主要浏览器都支持，并支持HTML4，XHTML和HTML5标准
+缺点：不允许使用脚本。
+示例：
+
+```html
+<object width="300px" height="300px" data="img/demo.svg" type="image/svg+xml"></object>
+```
+
+
+（3）使用 `<iframe>` 标签
+
+优势：所有主要浏览器都支持，并允许使用脚本
+缺点：不推荐在HTML4和XHTML中使用（但在HTML5允许）
+示例：
+
+```html
+<iframe width="300px" height="300px" src="img/demo.svg"></iframe> 
+```
+
+（4）直接在HTML嵌入SVG代码
+
+示例：
+```html
+<svg width="500px" height="500px" style="margin:50px;" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="20" rx="10" ry="10" width="300" height="300" style="fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0);fill-opacity:0.1;stroke-opacity:0.9;opacity:0.9;"/> 
+</svg>
+```
+（5）使用<img>标签
+
+示例：
+```html
+<img src="img/demo.svg" width="300px" height="300px"/>
+```
+（6）链接到svg文件
+
+示例：
+```html
+<a href="img/demo.svg">查看svg</a>
+```
+
+3、在css中使用
+
+示例：
+```css
+.container{
+  background: white url(img/demo.svg) repeat;
+}
+```
+
+## 语法
+
+- text: 创建一个 text 元素
+- circle: 创建一个圆
+- rect: 创建一个矩形
+- line: 创建一条线
+- path: 在两点之间创建一条路径
+- textPath: 在两点之间创建一条路径，并创建一个链接文本元素
+- polygon: 允许创建任意类型的多边形
+
+
+- g: 单独的元素
+
+    - \<g\>
+元素g是用来组合对象的容器。添加到g元素上的变换会应用到其所有的子元素上。添加到g元素的属性会被其所有的子元素继承。有点像div的感觉
+
+
+这么看起来似乎SVG很简单,那么为什么老大给我一周多的时间学呢.
+
+后来发现svg其实是一个很难的事,这里甚至还涉及到了很多数学知识.
+
+还有一些动画的任务.
+
+所幸找到了一个台湾大佬写的博客[SVG研究之路](https://www.oxxostudio.tw/articles/201406/svg-06-stroke.html)我在这个专栏获益匪浅.
+
+在所有SVG的内容里,最重要的就是path属性了,什么是在两点之间创建一条路径.
+
+指令 |	参数 |	指令说明
+----- | ----- | ----
+M	| xy |	起始点的x , y 座标( move to )
+L	| xy |	从目前点的座标画直线到指定点的x , y 座标( line to )
+H |	x |	从目前点的座标画水平直线到指定的x 轴座标( horizo​​ntal line to )
+V	| y |	从目前点的座标画垂直线到指定的y 轴座标( vertical line to )
+C	| x1 y1 x2 y2 xy |	从目前点的座标画条贝兹曲线到指定点的x, y 座标：其中x1, y1 及x2, y2 为控制点( curve )
+S	| x2 y2 xy	| 从目前点的座标画条反射的贝兹曲线到指定点的x, y 座标：其中x2, y2 为反射的控制点( smooth curve )
+Q	| x1 y1 xy	| 从目前点的座标画条二次贝兹曲线到指定点的x, y 座标：其中x1, y1 为控制点( quadratic Bézier curve )
+T	| xy	| 从目前点的座标画条反射二次贝兹曲线到指定点的x, y 座标：以前一个座标为反射控制点( smooth quadratic Bézier curve )
+A	| rx ry x-axis-rotation large-arc-flag sweep-flag xy	| 从目前点的座标画个椭圆形到指定点的x, y 座标：其中rx, ry 为椭圆形的x 轴及y 轴的半径，x-axis-rotation 是弧线与x 轴的旋转角度，large- arc-flag 则设定1 最大角度的弧线或是0 最小角度的弧线，sweep-flag 设定方向为1 顺时针方向或0 逆时针方向( Arc )
+Z	| |	关闭路径，将目前点的座标与第一个点的座标连接起来( closepath )
+
+光看怎么能记得住,尝试写一个demo吧
+
+
+## 一些练习
+
+### 练习1. 根据表格画出折线图
+
+年龄 | 身高
+---- | ----
+14 | 150
+15 | 156
+16 | 161
+17 | 168
+18 | 170
+
+首先需要
+
+### 练习2. 根据表格画出饼状图
+
+
+### 练习 实现三个动画效果
+
+ SVG 格式 | 支持列表
+----------- | ----- 
+inline SVG | 支持资源外链  支持CSS 支持JS 
+ img SVG | 不支持资源外链 支持内部CSS 不支持JS 
+ background-img SVG | 不支持资源外链 支持内部CSS 不支持JS 
+ background-img BASE64 SVG | 不支持资源外链 支持内部CSS 不支持JS 
+ object SVG | 支持资源外链 支持内部CSS 支持内部JS 
+ embed SVG | 支持资源外链 支持内部CSS 支持内部JS 
+ iframe SVG | 支持资源外链 支持内部CSS 支持内部JS 
+
+有了这个表, 你会发现几乎在所有情况下. SVG都支持内部CSS. 即在SVG内部写 style 标签定义其自身的样式. (注意: inline SVG 的 style 标签会污染外部 HTML 的 style)
+
+这样的好处是什么?
+
+在 SVG 内部配合CSS媒体查询. 可以实现 Responsive Content 即 内容根据其容器的尺寸自行改变其自身. 我们一直都在讲 Responsive Web design. 但这主要集中在 Page Level. 或者说将 Layout + Content 两者交融在页面被编码时一同考虑响应式代码. 但在实际情况中网站的 Content 会以后续更新的方式被插入进 Page 中的. 其自身若没有 Responsive 能力. 那么将大大影响 Responsive Page 的自由度. 又或者 Content 被使用在不同的页面中的不同容器里. 如果没有 Responsive 能力. 势必大大降低其使用范围. 广告就是典型例子. 同一个广告, 因为其没有 Responsive 能力. 需要为 Responsive Page 的不同状态设计不同尺寸的广告. 又或需要为不同页面中的不同容器设计不同尺寸的广告. 但如果这广告自身有了 Responsive 的能力. 就可以使解决这一问题的难度大大降低. 我近期一直在想要尝试使用 SVG 来解决这一问题.
+
+[数据可视化：你想知道的经典图表全在这](https://zhuanlan.zhihu.com/p/24168144)
+
+```html
+<svg width="300" height="180">
+  <circle cx="30"  cy="50" r="25" />
+  <>
+  <circle cx="90"  cy="50" r="25"  class="red" />
+  <circle cx="150" cy="50" r="25" class="fancy" />
+</svg>
+
+<svg width="300" height="180">
+  <line x1="0" y1="0" x2="200" y2="0" style="stroke:rgb(0,0,0);stroke-width:5" />
+</svg>
+
+<svg width="300" height="180">
+  <polyline points="3,3 30,28 3,53" fill="none" stroke="black" />
+</svg>
+
+<svg width="300" height="100">
+  <defs>
+    <g id="myCircle">
+      <text x="25" y="20">圆形</text>
+      <circle cx="50" cy="50" r="20"/>
+    </g>
+  </defs>
+
+  <use href="#myCircle" x="0" y="0" />
+  <use href="#myCircle" x="100" y="0" fill="blue" />
+  <use href="#myCircle" x="200" y="0" fill="white" stroke="blue" />
+</svg>
+
+<svg width="350" height="160">
+  <g class="layer" transform="translate(60,10)">
+    <circle r="5" cx="0"   cy="105" />
+    <circle r="5" cx="90"  cy="90"  />
+    <circle r="5" cx="180" cy="60"  />
+    <circle r="5" cx="270" cy="0"   />
+
+    <g class="y axis">
+      <line x1="0" y1="0" x2="0" y2="120" />
+      <text x="-40" y="105" dy="5">$10</text>
+      <text x="-40" y="0"   dy="5">$80</text>
+    </g>
+    <g class="x axis" transform="translate(0, 120)">
+      <line x1="0" y1="0" x2="270" y2="0" />
+      <text x="-30"   y="20">January 2014</text>
+      <text x="240" y="20">April</text>
+    </g>
+  </g>
+</svg>
+```
