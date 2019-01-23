@@ -208,6 +208,18 @@ When a relative h command is used, the end point of the line is (cpx + x, cpy). 
 When a relative v command is used, the end point of the line is (cpx, cpy + y).
 ```
 
+## 一些基础练习
+
+text的一些属性练习:
+
+
+裁剪图片
+
+
+
+TEXT ,还有复制 还有切割
+
+
 ## 后续练习
 
 ### 练习1. 根据表格画出折线图
@@ -221,6 +233,11 @@ When a relative v command is used, the end point of the line is (cpx, cpy + y).
 18 | 170
 
 在编写这个练习的时候,需要特别注意: 在使用js或jQuery操作SVG的元素时,不能直接使用createElement来构建元素.因为对于SVG而言,创建SVG元素需要指定命名空间，就像需要在svg标签上设定xmlns为`http://www.w3.org/2000/svg`。正确的构造方式是调用createElentNS()方法，并将`”http://www.w3.org/2000/svg”`作为第一参数传入。
+
+W3C是这样写的
+```
+When SVG is parsed as a XML, for compliance with the Namespaces in XML Recommendation [xml-names], an SVG namespace declaration must be provided so that all SVG elements are identified as belonging to the SVG namespace.
+```
 
 关于更多的使用JS操作SVG的方法可以参考这里
 
@@ -257,11 +274,15 @@ When a relative v command is used, the end point of the line is (cpx, cpy + y).
 [实际效果](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/B%C3%A9ziercurve/curve.html)
 [源代码](https://github.com/magiconch/svg-canvas/blob/master/svg/B%C3%A9ziercurve/curve.html)
 
-### 练习4. 实现三个动画效果
+### 练习4. 实现几个动画效果
 
 
-[数据可视化：你想知道的经典图表全在这](https://zhuanlan.zhihu.com/p/24168144)
+
 
 
 ## 后记
 其实有很多东西都没有写上
+
+[数据可视化：你想知道的经典图表全在这](https://zhuanlan.zhihu.com/p/24168144)
+
+参考链接 : [](http://tutorials.jenkov.com/svg/svg-examples.html)
