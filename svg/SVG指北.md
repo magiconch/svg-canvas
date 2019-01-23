@@ -252,6 +252,12 @@ When a relative v command is used, the end point of the line is (cpx, cpy + y).
 蛋炒饭 | 30%
 番茄炒蛋 | 40%
 
+
+
+### 练习3. 实现可以随意拖拽练习的path路径
+
+
+
 ### 练习 实现三个动画效果
 
  SVG 格式 | 支持列表
@@ -271,56 +277,3 @@ inline SVG | 支持资源外链  支持CSS 支持JS
 在 SVG 内部配合CSS媒体查询. 可以实现 Responsive Content 即 内容根据其容器的尺寸自行改变其自身. 我们一直都在讲 Responsive Web design. 但这主要集中在 Page Level. 或者说将 Layout + Content 两者交融在页面被编码时一同考虑响应式代码. 但在实际情况中网站的 Content 会以后续更新的方式被插入进 Page 中的. 其自身若没有 Responsive 能力. 那么将大大影响 Responsive Page 的自由度. 又或者 Content 被使用在不同的页面中的不同容器里. 如果没有 Responsive 能力. 势必大大降低其使用范围. 广告就是典型例子. 同一个广告, 因为其没有 Responsive 能力. 需要为 Responsive Page 的不同状态设计不同尺寸的广告. 又或需要为不同页面中的不同容器设计不同尺寸的广告. 但如果这广告自身有了 Responsive 的能力. 就可以使解决这一问题的难度大大降低. 我近期一直在想要尝试使用 SVG 来解决这一问题.
 
 [数据可视化：你想知道的经典图表全在这](https://zhuanlan.zhihu.com/p/24168144)
-
-```html
-<svg width="300" height="180">
-  <circle cx="30"  cy="50" r="25" />
-  <circle cx="90"  cy="50" r="25"  class="red" />
-  <circle cx="150" cy="50" r="25" class="fancy" />
-</svg>
-
-<svg width="300" height="180">
-  <line x1="0" y1="0" x2="200" y2="0" style="stroke:rgb(0,0,0);stroke-width:5" />
-</svg>
-
-<svg width="300" height="180">
-  <polyline points="3,3 30,28 3,53" fill="none" stroke="black" />
-</svg>
-
-<svg width="300" height="100">
-  <defs>
-    <g id="myCircle">
-      <text x="25" y="20">圆形</text>
-      <circle cx="50" cy="50" r="20"/>
-    </g>
-  </defs>
-
-  <use href="#myCircle" x="0" y="0" />
-  <use href="#myCircle" x="100" y="0" fill="blue" />
-  <use href="#myCircle" x="200" y="0" fill="white" stroke="blue" />
-</svg>
-
-<svg width="350" height="160">
-  <g class="layer" transform="translate(60,10)">
-    <circle r="5" cx="0"   cy="105" />
-    <circle r="5" cx="90"  cy="90"  />
-    <circle r="5" cx="180" cy="60"  />
-    <circle r="5" cx="270" cy="0"   />
-
-    <g class="y axis">
-      <line x1="0" y1="0" x2="0" y2="120" />
-      <text x="-40" y="105" dy="5">$10</text>
-      <text x="-40" y="0"   dy="5">$80</text>
-    </g>
-    <g class="x axis" transform="translate(0, 120)">
-      <line x1="0" y1="0" x2="270" y2="0" />
-      <text x="-30"   y="20">January 2014</text>
-      <text x="240" y="20">April</text>
-    </g>
-  </g>
-</svg>
-```
-
-
-
-实现一个基于svg和js的钟表

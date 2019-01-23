@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Curve</title>
+    <style>
+        #curve {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <svg width="900" height="900" id="curve" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <g>
+            <circle id="point" cx="100" cy="200" r="5"></circle>
+            <text id="pointText" x="110" y="205" >(100, 200)</text>
+        </g>
+        
+        <path id="toChange" d="M100 100 Q100 200 ,300 100" stroke="black" stroke-width="3" fill="none"></path>
+    </svg>
+    <script src="curve.js"></script>
+</body>
+</html>
