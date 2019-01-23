@@ -6,55 +6,31 @@ SVG 是一种基于 XML 语法的图像格式，全称是可缩放矢量图（Sc
 
 ## SVG的优劣
 
-### 相对于png和jpg,它的优势是
+#### 优点
+- SVG 可被非常多的工具读取和修改（比如记事本）
+- SVG 与 JPEG 和 GIF 图像比起来，尺寸更小，且可压缩性更强。
+- SVG 是可伸缩的
+- SVG 图像可在任何的分辨率下被高质量地打印
+- SVG 可在图像质量不下降的情况下被放大
+- SVG 图像中的文本是可选的，同时也是可搜索的（很适合制作地图）
+- SVG 可以与 Java 技术一起运行
+- SVG 是开放的标准
+- SVG 文件是纯粹的 XML
 
+#### 缺点
 但是人无完人,也没有绝对的好标准.相对于png来讲,如果图片特别复杂,SVG所需要的大小是远远大于jpg等的.
 
 为了证明网上的观点,我从维基百科上下载了一份莫奈的<印象 日出>,你可以[点击这里](https://github.com/magiconch/svg-canvas/blob/master/Claude_Monet%2C_Impression%2C_soleil_levant.jpg),你会发现,作为jpg版本的图片大小只有1.8mb,而转换成的[SVG图片](https://github.com/magiconch/svg-canvas/blob/master/cbt38-ct60z.svg),大小足足为4.9mb.这是由于是svg其本质是利用向量(Vector)来描述图片,对于简单的图片而言,其可以使用很少的向量来描述,所以大小优于使用像素来描述的其他格式.
 
-**补充: 在仔细看了各个jpg转SVG的网站,我发现实质上jpg与SVG的转换是指将图片转为base64,,所以这种证明的办法似乎存在错误**
+**补充: 在仔细看了各个jpg转SVG的网站,我发现实质上jpg与SVG的转换是指将图片转为base64,所以这种证明的办法似乎存在错误**
 
-### 过时的缺点:
+#### 过时的缺点:
 
-有很多以前的前辈学习SVG时候各大浏览器对其的支持度还不容乐观,但是在今天(2019年1.22),它的支持度已经达到95%以上了.你可以点击下面的链接查看支持度:
+有很多前辈学习SVG时,各大浏览器对其的支持度还不容乐观,但是在今天(2019年1.22),它的支持度已经达到95%以上了.你可以点击下面的链接查看支持度:
 
- [支持度](https://caniuse.com/#search=svg)
+[支持度](https://caniuse.com/#search=svg)
 
-## 开始使用
-
-元素本身宽高,元素本身的宽高是默认的
-
-画布决定了能画多少大小的东西,如果不指定的话,就会造成图形莫名其妙的消失.但是利用这种特性,我们也可以实现很多切割后的形状.但是
-
-xmls属性
-
-SVG有着丰富的展示方式
-
-- SVG 文件可以直接插入网页，成为 DOM 的一部分，然后用 JavaScript 和 CSS 进行操作,像这样 :
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>A page</title>
-  </head>
-  <body>
-    <svg width="10" height="10">
-      <rect x="0" y="0" width="100" height="100" fill="blue" />
-    </svg>
-  </body>
-</html>
-```
-在 HTLM 中内联 SVG 的功能使该格式成为场景中的 unicorn,因为其他图像不能这样做，必须为每个图像打开一个单独的请求来获取该格式。
-
-- 将它们包含在一个 img 标签中来显示：
-```html
-<img src="image.svg" alt="My SVG image" />
-```
-
-```html
-
-```
+## SVG使用方式
 
 （1）使用 `<embed>` 标签 **(不推荐)**
 
@@ -110,18 +86,32 @@ HTML `<object>` 元素（或者称作 HTML 嵌入对象元素）表示引入一�
 <a href="img/demo.svg">查看svg</a>
 ```
 
-在css中使用
+（7）在css中使用
 
 示例：
 ```css
 .container{
   background: white url(img/demo.svg) repeat;
 }
+
+## 各个方式SVG支持列表
 ```
+ SVG 格式 | 支持列表
+----------- | ----- 
+inline SVG | 支持资源外链  支持CSS 支持JS 
+ img SVG | 不支持资源外链 支持内部CSS 不支持JS 
+ background-img SVG | 不支持资源外链 支持内部CSS 不支持JS 
+ background-img BASE64 SVG | 不支持资源外链 支持内部CSS 不支持JS 
+ object SVG | 支持资源外链 支持内部CSS 支持内部JS 
+ embed SVG | 支持资源外链 支持内部CSS 支持内部JS 
+ iframe SVG | 支持资源外链 支持内部CSS 支持内部JS 
+
+有了这个表, 你会发现几乎在所有情况下. SVG都支持内部CSS. 即在SVG内部写 style 标签定义其自身的样式. (注意: inline SVG 的 style 标签会污染外部 HTML 的 style)
 
 
-## 一个完整的SVG文件
-// 这里参考自菜鸟教程,涉及到一些XML的内容
+## SVG文件探秘
+
+*这里参考自菜鸟教程,涉及到很多XML的内容*
 
 一个简单的SVG图形例子：
 
@@ -156,11 +146,9 @@ fill 属性设置形状内的颜色。我们把填充颜色设置为红色。
 
 注释：所有的开启标签必须有关闭标签！
 
-## 语法
+## SVG标签
 
 这些是常用的标签
-
-为了方便调试,所有的引入都直接在HTML嵌入SVG代码.
 
 - text: 创建一个 text 元素
 - circle: 创建一个圆
@@ -172,20 +160,18 @@ fill 属性设置形状内的颜色。我们把填充颜色设置为红色。
 
 
 - g: 单独的元素
-
-    - \<g\>
+  - \<g\>
 元素g是用来组合对象的容器。添加到g元素上的变换会应用到其所有的子元素上。添加到g元素的属性会被其所有的子元素继承。有点像div的感觉
+---
+这么看起来似乎SVG很简单,但是随着慢慢学习,发现单是一个path就够我搞得了.
 
-
-这么看起来似乎SVG很简单,那么为什么老大给我一周多的时间学呢.
-
-后来发现svg其实是一个很难的事,这里甚至还涉及到了很多数学知识.
-
-还有一些动画的任务.
+这里甚至还涉及到了很多数学知识.
 
 所幸找到了一个台湾大佬写的博客[SVG研究之路](https://www.oxxostudio.tw/articles/201406/svg-06-stroke.html)我在这个专栏获益匪浅.
 
-在所有SVG的内容里,最重要的就是path属性了,什么是在两点之间创建一条路径.这不等于直接从起点画一条直线到终点.也就是说,其不一定是一个一次函数.
+### PATH
+
+这是暂时最难的一个部分,它的d属性有很多部分
 
 指令 |	参数 |	指令说明
 ----- | ----- | ----
@@ -202,11 +188,18 @@ Z	| |	关闭路径，将目前点的座标与第一个点的座标连接起来( 
 
 光看怎么能记得住,尝试写一个demo吧. 
 
-[demo](https://github.com/magiconch/svg-canvas/blob/master/simpledemo.html)
+[预览效果](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/simpledemo.html)
+[demo](https://github.com/magiconch/svg-canvas/blob/master/svg/simpledemo.html)
 
+后记: 后来还找到了一个特别详细的文章,[SVG之旅：路径](https://www.w3cplus.com/svg/svg-path.html)
+
+
+**在这里遇到的问题:**
 这个H和V的单位是什么?
 
 最开始在纠结H和V的单位是什么,后来释然了,因为H和V的单位其实就相当于L的横纵坐标,在W3C里也是这样写的.这也是SVG与其他格式的本质区别,SVG是一个标准的笛卡尔坐标系,在历来的数学学习中,从来没有一个坐标系有单位.只有现实应用的时候,会产生单位的对应.SVG相当于对图像的抽象.
+
+附:W3C原文:
 ```
 When a relative l command is used, the end point of the line is (cpx + x, cpy + y).
 
@@ -215,7 +208,7 @@ When a relative h command is used, the end point of the line is (cpx + x, cpy). 
 When a relative v command is used, the end point of the line is (cpx, cpy + y).
 ```
 
-## 一些练习
+## 后续练习
 
 ### 练习1. 根据表格画出折线图
 
@@ -235,9 +228,9 @@ When a relative v command is used, the end point of the line is (cpx, cpy + y).
 
 最后实现的效果就是一个简单的折线图.
 
-[实际效果](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/Linechart.html)
+[实际效果](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/linechart/Linechart.html)
 
-[源代码](https://github.com/magiconch/svg-canvas/blob/master/Linechart.html)
+[源代码](https://github.com/magiconch/svg-canvas/blob/master/svg/linechart/Linechart.html)
 
 ### 练习2. 根据表格画出饼状图
 
@@ -252,28 +245,23 @@ When a relative v command is used, the end point of the line is (cpx, cpy + y).
 蛋炒饭 | 30%
 番茄炒蛋 | 40%
 
+这里需要处理的核心问题就是如何把分配给
 
+[实际效果](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/piechart/piechart.html)
+[源代码](https://github.com/magiconch/svg-canvas/blob/master/svg/piechart/piechart.html)
 
-### 练习3. 实现可以随意拖拽练习的path路径
+### 练习3. 实现可以随意拖拽的贝塞尔曲线
 
+因为贝塞尔曲线有些理解困难,我制作了一个可以随意拖拽的贝塞尔曲线,只要拖动点P0就可以方便的看到曲线的变化,这里只是用了一些简单的js方法.
 
+[实际效果](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/B%C3%A9ziercurve/curve.html)
+[源代码](https://github.com/magiconch/svg-canvas/blob/master/svg/B%C3%A9ziercurve/curve.html)
 
-### 练习 实现三个动画效果
+### 练习4. 实现三个动画效果
 
- SVG 格式 | 支持列表
------------ | ----- 
-inline SVG | 支持资源外链  支持CSS 支持JS 
- img SVG | 不支持资源外链 支持内部CSS 不支持JS 
- background-img SVG | 不支持资源外链 支持内部CSS 不支持JS 
- background-img BASE64 SVG | 不支持资源外链 支持内部CSS 不支持JS 
- object SVG | 支持资源外链 支持内部CSS 支持内部JS 
- embed SVG | 支持资源外链 支持内部CSS 支持内部JS 
- iframe SVG | 支持资源外链 支持内部CSS 支持内部JS 
-
-有了这个表, 你会发现几乎在所有情况下. SVG都支持内部CSS. 即在SVG内部写 style 标签定义其自身的样式. (注意: inline SVG 的 style 标签会污染外部 HTML 的 style)
-
-这样的好处是什么?
-
-在 SVG 内部配合CSS媒体查询. 可以实现 Responsive Content 即 内容根据其容器的尺寸自行改变其自身. 我们一直都在讲 Responsive Web design. 但这主要集中在 Page Level. 或者说将 Layout + Content 两者交融在页面被编码时一同考虑响应式代码. 但在实际情况中网站的 Content 会以后续更新的方式被插入进 Page 中的. 其自身若没有 Responsive 能力. 那么将大大影响 Responsive Page 的自由度. 又或者 Content 被使用在不同的页面中的不同容器里. 如果没有 Responsive 能力. 势必大大降低其使用范围. 广告就是典型例子. 同一个广告, 因为其没有 Responsive 能力. 需要为 Responsive Page 的不同状态设计不同尺寸的广告. 又或需要为不同页面中的不同容器设计不同尺寸的广告. 但如果这广告自身有了 Responsive 的能力. 就可以使解决这一问题的难度大大降低. 我近期一直在想要尝试使用 SVG 来解决这一问题.
 
 [数据可视化：你想知道的经典图表全在这](https://zhuanlan.zhihu.com/p/24168144)
+
+
+## 后记
+其实有很多东西都没有写上
