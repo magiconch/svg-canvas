@@ -12,6 +12,8 @@ SVG 是一种基于 XML 语法的图像格式，全称是可缩放矢量图（Sc
 
 为了证明网上的观点,我从维基百科上下载了一份莫奈的<印象 日出>,你可以[点击这里](https://github.com/magiconch/svg-canvas/blob/master/Claude_Monet%2C_Impression%2C_soleil_levant.jpg),你会发现,作为jpg版本的图片大小只有1.8mb,而转换成的[SVG图片](https://github.com/magiconch/svg-canvas/blob/master/cbt38-ct60z.svg),大小足足为4.9mb.这是由于是svg其本质是利用向量(Vector)来描述图片,对于简单的图片而言,其可以使用很少的向量来描述,所以大小优于使用像素来描述的其他格式.
 
+**补充: 在仔细看了各个jpg转SVG的网站,我发现实质上jpg与SVG的转换是指将图片转为base64,,所以这种证明的办法似乎存在错误**
+
 ### 过时的缺点:
 
 有很多以前的前辈学习SVG时候各大浏览器对其的支持度还不容乐观,但是在今天(2019年1.22),它的支持度已经达到95%以上了.你可以点击下面的链接查看支持度:
@@ -204,6 +206,15 @@ Z	| |	关闭路径，将目前点的座标与第一个点的座标连接起来( 
 
 这个H和V的单位是什么?
 
+最开始在纠结H和V的单位是什么,后来释然了,因为H和V的单位其实就相当于L的横纵坐标,在W3C里也是这样写的.这也是SVG与其他格式的本质区别,SVG是一个标准的笛卡尔坐标系,在历来的数学学习中,从来没有一个坐标系有单位.只有现实应用的时候,会产生单位的对应.SVG相当于对图像的抽象.
+```
+When a relative l command is used, the end point of the line is (cpx + x, cpy + y).
+
+When a relative h command is used, the end point of the line is (cpx + x, cpy). This means that an h command with a positive x value draws a horizontal line in the direction of the positive x-axis.
+
+When a relative v command is used, the end point of the line is (cpx, cpy + y).
+```
+
 ## 一些练习
 
 ### 练习1. 根据表格画出折线图
@@ -216,10 +227,30 @@ Z	| |	关闭路径，将目前点的座标与第一个点的座标连接起来( 
 17 | 168
 18 | 170
 
-首先需要
+在编写这个练习的时候,需要特别注意: 在使用js或jQuery操作SVG的元素时,不能直接使用createElement来构建元素.因为对于SVG而言,创建SVG元素需要指定命名空间，就像需要在svg标签上设定xmlns为`http://www.w3.org/2000/svg`。正确的构造方式是调用createElentNS()方法，并将`”http://www.w3.org/2000/svg”`作为第一参数传入。
+
+关于更多的使用JS操作SVG的方法可以参考这里
+
+[JavaScript操作SVG的一些知识](http://blog.iderzheng.com/something-about-svg-with-javascript/)
+
+最后实现的效果就是一个简单的折线图.
+
+[实际效果](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/Linechart.html)
+
+[源代码](https://github.com/magiconch/svg-canvas/blob/master/Linechart.html)
 
 ### 练习2. 根据表格画出饼状图
 
+我们都知道饼状图是为了突出数据之间的比例.
+
+我们暂且捏造一份数据,用它来制作一份饼状图
+
+佩奇午餐种类 | 占比 
+ ----- | -----
+三明治 | 10%
+汉堡包 | 20%
+蛋炒饭 | 30%
+番茄炒蛋 | 40%
 
 ### 练习 实现三个动画效果
 
@@ -290,6 +321,6 @@ inline SVG | 支持资源外链  支持CSS 支持JS
 </svg>
 ```
 
-jpg转的, 实际上是base64
+
 
 实现一个基于svg和js的钟表
