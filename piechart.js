@@ -1,23 +1,50 @@
-// 创建数据 Sandwich Burger
-let arr = {'Sandwich':10, 'Burger':20, 'meet':30, 'ega':40};
+function makeSVG(tag, attrs) {
+    var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (var k in attrs)
+        el.setAttribute(k, attrs[k]);
+    return el;
 
-// 默认总和是100%
-let startAngle=0;
+}
+// 数据
+let data = [10, 20, 30, 40];
+
 let p = document.getElementById('piechart');
-for (const key in arr) {
-       // 起始角度
-    let deg = arr[key]*3.6 + startAngle;   // 夹角
-    // 参数方程
-    let x0 = 100+50*Math.cos(startAngle*Math.PI/180);  // 计算起点X坐标
-    let y0 = 100-50*Math.sin(startAngle*Math.PI/180);  // 计算起点y坐标
-    let x1 = 100+50*Math.cos(deg*Math.PI/180);        // 计算终点x坐标
-    let y1 = 100-50*Math.sin(deg*Math.PI/180);        // 计算终点y坐标   
-    startAngle = deg;
-    let tempPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    tempPath.setAttribute('d', `M100 100 L${x0} ${y0} A100 100 0 0 1 ${x1} ${y1} Z`);
-    tempPath.setAttribute('stroke','black');
-    tempPath.setAttribute('stroke-width', '2');
-    tempPath.setAttribute('fill', 'green');
+let cx = 100,
+    cy = 100,
+    r = 50,
+    x0, y0, x1, y1;
+let all = 100;
+let startAngle = 0;
+let dValue,endAngle;
+for (i = 0; i < data.length; i++) {
+    if (i === 0) {
+        x0 = cx + r * Math.cos((0 * Math.PI) / 180);
+        y0 = cy + r * Math.sin((0 * Math.PI) / 180);
+        startAngle = startAngle + data[0];
+        endAngle = startAngle / all * 360;
+        x1 = cx + r * Math.cos((endAngle * Math.PI) / 180);
+        y1 = cy + r * Math.sin((endAngle * Math.PI) / 180);
+    } else if (i > 0 && i < (data.length - 1)) {
+        x0 = cx + r * Math.cos((endAngle * Math.PI) / 180);
+        y0 = cy + r * Math.sin((endAngle * Math.PI) / 180);
+        startAngle = startAngle + data[i];
+        endAngle = startAngle / all * 360;
+        x1 = cx + r * Math.cos((endAngle * Math.PI) / 180);
+        y1 = cy + r * Math.sin((endAngle * Math.PI) / 180);
+    } else {
+        x0 = cx + r * Math.cos((endAngle * Math.PI) / 180);
+        y0 = cy + r * Math.sin((endAngle * Math.PI) / 180);
+        x1 = cx + r * Math.cos((0 * Math.PI) / 180);
+        y1 = cy + r * Math.sin((0 * Math.PI) / 180);
+    }
+
+    if ((data[i] / all * 360) > 180) {
+        dValue = `M${cx} ${cy} L${x0} ${y0} A${r} ${r} 0 0 0 ${x1} ${y1} Z`;
+    } else {
+        dValue = `M${cx} ${cy} L${x0} ${y0} A${r} ${r} 0 0 1 ${x1} ${y1} Z`;
+    }
+    let tempPath = makeSVG('path', { 'stroke': 'black', 'stroke-width': '2', 'fill': 'green' });
+    tempPath.setAttribute('d', dValue);
     p.appendChild(tempPath);
 }
 

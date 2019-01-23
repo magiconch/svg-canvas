@@ -8,7 +8,7 @@
  linePath.setAttribute('fill', 'none');
 let aa = 'M200 200';
 for (const index of arr) {
-    aa += ` L${index[0]} ${index[1]}`;
+    aa += ` L${index[0]},${index[1]}`;
 }
 linePath.setAttribute('d',aa);
  p.appendChild(linePath);
