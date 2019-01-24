@@ -249,8 +249,6 @@ $$y=k+a\sin t$$
 
 
 
-
-
 后记: 后来还找到了一个特别详细的文章,[SVG之旅：路径](https://www.w3cplus.com/svg/svg-path.html)
 
 
@@ -278,6 +276,9 @@ text的一些属性练习:
 
 fill的一些属性练习:
 
+[预览](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/fill.html)
+
+[代码](https://github.com/magiconch/svg-canvas/blob/master/svg/fill.html)
 
 ## 后续练习
 
@@ -334,7 +335,9 @@ When SVG is parsed as a XML, for compliance with the Namespaces in XML Recommend
 [源代码](https://github.com/magiconch/svg-canvas/blob/master/svg/B%C3%A9ziercurve/curve.html)
 
 
+### 练习4. 练习并阅读一些动画代码
 
+[仓库地址](https://github.com/magiconch/svg-canvas/tree/master/svg/at)
 
 一些参考链接 : 
 
