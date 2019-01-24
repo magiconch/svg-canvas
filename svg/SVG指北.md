@@ -191,6 +191,54 @@ Z	| |	关闭路径，将目前点的座标与第一个点的座标连接起来( 
 [预览效果](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/simpledemo.html)
 [demo](https://github.com/magiconch/svg-canvas/blob/master/svg/simpledemo.html)
 
+
+### 贝塞尔曲线
+
+### 深入理解弧线
+
+这里似乎是SVG中最难理解的部分,但是对于数学专业似乎很好理解~ 
+
+首先我们先来看一个普通的A参数长什么样子
+
+```html
+<path d="M50 50 A50 10,0 0 0 100 0" stroke="#f00" fill="none"/>
+```
+
+- rx ： 椭圆的x 轴半径( 根据不同的终点换算成比例 )
+- ry ： 椭圆的y 轴半径( 根据不同的终点换算成比例 )
+- x-axis-rotation ： 弧线与x 轴的夹角
+- large-arc-flag ： 1 为大角度弧线，0 为小角度弧线( 必须有三个点 )
+- sweep-flag ： 1 为顺时针方向，0 为逆时针方向
+- x ： 终点x 座标
+- y ： 终点y 座标
+
+这里的 rx 和 ry很好理解
+
+而x , y 不但是终点,也是椭圆上的一个点
+
+M是起点
+
+所以抛开中间三个看不懂的参数,我们现在已经有了椭圆的长轴长度$rx$短轴长度$ry$,还有起点M和终点$(x,y)$,
+
+已知起点和终点都在椭圆上,我们就可以套用椭圆的一般方程确定位置.
+
+我从维基百科上找到了椭圆的一般方程定义.
+
+*中心位于点$(h,k)$的主轴平行于 $x$ 轴的椭圆由如下方程指定*
+
+$$x=h+a\cos t$$
+$$y=k+a\sin t$$
+
+
+
+这里需要特别注意的是 **平行于 $x$ 轴** ,而我们根据前文的信息,很难确定椭圆的主轴是否平行于X轴,这就引出了我们的第三个参数,x-axis-rotation,它代表弧线于x轴的夹角.也就是主轴相对于x轴的偏移量.
+
+后面的两个就更简单了
+
+
+
+
+
 后记: 后来还找到了一个特别详细的文章,[SVG之旅：路径](https://www.w3cplus.com/svg/svg-path.html)
 
 
