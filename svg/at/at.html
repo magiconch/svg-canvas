@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <svg width="900" height="900" id="piechart" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <rect width="50" height="50" x="10" y="10" fill="#09c">
+            <animate attributeName="x" to="60" dur="2s" repeatCount="indefinite"></animate>
+        </rect>
+        <rect width="50" height="50" x="10" y="10" fill="none" stroke="#000" />
+        <text x="10" y="80">这是animate</text>
+
+
+        <circle r="10" cy="-10">
+            <animateMotion dur="5s" from="200,200" to="200,200" path="M10 200 A50 50 0 1 0 110 200 A50 50 0 1 0 10 200"
+                repeatCount="indefinite" rotate="auto" />
+        </circle>
+        <path fill="none" stroke="#000" d="M10 200 A50 50 0 1 0 110 200 A50 50 0 1 0 10 200" />
+        <text x="10" y="280">这是animateMotion</text>
+
+        
+    </svg>
+
+</body>
+
+</html>

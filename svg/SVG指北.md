@@ -18,6 +18,7 @@ SVG 是一种基于 XML 语法的图像格式，全称是可缩放矢量图（Sc
 - SVG 文件是纯粹的 XML
 
 #### 缺点
+
 但是人无完人,也没有绝对的好标准.相对于png来讲,如果图片特别复杂,SVG所需要的大小是远远大于jpg等的.
 
 为了证明网上的观点,我从维基百科上下载了一份莫奈的<印象 日出>,你可以[点击这里](https://github.com/magiconch/svg-canvas/blob/master/Claude_Monet%2C_Impression%2C_soleil_levant.jpg),你会发现,作为jpg版本的图片大小只有1.8mb,而转换成的[SVG图片](https://github.com/magiconch/svg-canvas/blob/master/cbt38-ct60z.svg),大小足足为4.9mb.这是由于是svg其本质是利用向量(Vector)来描述图片,对于简单的图片而言,其可以使用很少的向量来描述,所以大小优于使用像素来描述的其他格式.
@@ -94,8 +95,9 @@ HTML `<object>` 元素（或者称作 HTML 嵌入对象元素）表示引入一�
   background: white url(img/demo.svg) repeat;
 }
 
-## 各个方式SVG支持列表
 ```
+## 各个方式SVG支持列表
+
  SVG 格式 | 支持列表
 ----------- | ----- 
 inline SVG | 支持资源外链  支持CSS 支持JS 
@@ -169,7 +171,7 @@ fill 属性设置形状内的颜色。我们把填充颜色设置为红色。
 
 所幸找到了一个台湾大佬写的博客[SVG研究之路](https://www.oxxostudio.tw/articles/201406/svg-06-stroke.html)我在这个专栏获益匪浅.
 
-### PATH
+### path
 
 这是暂时最难的一个部分,它的d属性有很多部分
 
@@ -189,14 +191,21 @@ Z	| |	关闭路径，将目前点的座标与第一个点的座标连接起来( 
 光看怎么能记得住,尝试写一个demo吧. 
 
 [预览效果](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/simpledemo.html)
-[demo](https://github.com/magiconch/svg-canvas/blob/master/svg/simpledemo.html)
+
+[源代码](https://github.com/magiconch/svg-canvas/blob/master/svg/simpledemo.html)
 
 
 ### 贝塞尔曲线
 
+直接看demo,这个实际上就是一个调整曲线的过程
+
+[demo](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/B%C3%A9ziercurve/curve.html)
+
+
+
 ### 深入理解弧线
 
-这里似乎是SVG中最难理解的部分,但是对于数学专业似乎很好理解~ 
+这里似乎是SVG中最难理解的部分,但是对于数学专业似乎很好理解~
 
 首先我们先来看一个普通的A参数长什么样子
 
@@ -212,11 +221,12 @@ Z	| |	关闭路径，将目前点的座标与第一个点的座标连接起来( 
 - x ： 终点x 座标
 - y ： 终点y 座标
 
-这里的 rx 和 ry很好理解
+这里的 rx 和 ry很好理解,就是椭圆的两个轴长.
 
-而x , y 不但是终点,也是椭圆上的一个点
 
-M是起点
+而x , y 不但是终点,也是椭圆上的一个点.
+
+M是起点,这个也不需要多说.
 
 所以抛开中间三个看不懂的参数,我们现在已经有了椭圆的长轴长度$rx$短轴长度$ry$,还有起点M和终点$(x,y)$,
 
@@ -266,6 +276,9 @@ text的一些属性练习:
 
 [代码](https://github.com/magiconch/svg-canvas/blob/master/svg/text.html)
 
+fill的一些属性练习:
+
+
 ## 后续练习
 
 ### 练习1. 根据表格画出折线图
@@ -308,7 +321,7 @@ When SVG is parsed as a XML, for compliance with the Namespaces in XML Recommend
 蛋炒饭 | 30%
 番茄炒蛋 | 40%
 
-这里需要处理的核心问题就是如何把分配给
+这里需要处理的核心问题就是如何在圆上选点,这里只需要借助椭圆的一般表达式就好啦.
 
 [实际效果](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/piechart/piechart.html)
 [源代码](https://github.com/magiconch/svg-canvas/blob/master/svg/piechart/piechart.html)
@@ -320,15 +333,14 @@ When SVG is parsed as a XML, for compliance with the Namespaces in XML Recommend
 [实际效果](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/B%C3%A9ziercurve/curve.html)
 [源代码](https://github.com/magiconch/svg-canvas/blob/master/svg/B%C3%A9ziercurve/curve.html)
 
-### 练习4. 实现几个动画效果
 
 
 
+一些参考链接 : 
 
-
-## 后记
-其实有很多东西都没有写上
+[jenkov](http://tutorials.jenkov.com/svg/svg-examples.html)
 
 [数据可视化：你想知道的经典图表全在这](https://zhuanlan.zhihu.com/p/24168144)
 
-参考链接 : [jenkov](http://tutorials.jenkov.com/svg/svg-examples.html)
+
+
