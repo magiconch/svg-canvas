@@ -233,7 +233,9 @@ $$y=k+a\sin t$$
 
 这里需要特别注意的是 **平行于 $x$ 轴** ,而我们根据前文的信息,很难确定椭圆的主轴是否平行于X轴,这就引出了我们的第三个参数,x-axis-rotation,它代表弧线于x轴的夹角.也就是主轴相对于x轴的偏移量.
 
-后面的两个就更简单了
+后面的两个就更简单了,一张图片就能很好诠释
+
+![图呢](https://github.com/magiconch/svg-canvas/blob/master/svg/painting/20140612_1_07.png)
 
 
 
@@ -260,13 +262,9 @@ When a relative v command is used, the end point of the line is (cpx, cpy + y).
 
 text的一些属性练习:
 
+[预览](http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/text.html)
 
-裁剪图片
-
-
-
-TEXT ,还有复制 还有切割
-
+[代码](https://github.com/magiconch/svg-canvas/blob/master/svg/text.html)
 
 ## 后续练习
 
@@ -333,4 +331,4 @@ When SVG is parsed as a XML, for compliance with the Namespaces in XML Recommend
 
 [数据可视化：你想知道的经典图表全在这](https://zhuanlan.zhihu.com/p/24168144)
 
-参考链接 : [](http://tutorials.jenkov.com/svg/svg-examples.html)
+参考链接 : [jenkov](http://tutorials.jenkov.com/svg/svg-examples.html)
