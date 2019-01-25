@@ -98,15 +98,15 @@ HTML `<object>` 元素（或者称作 HTML 嵌入对象元素）表示引入一�
 ```
 ## 各个方式SVG支持列表
 
- SVG 格式 | 支持列表
------------ | ----- 
-inline SVG | 支持资源外链  支持CSS 支持JS 
- img SVG | 不支持资源外链 支持内部CSS 不支持JS 
- background-img SVG | 不支持资源外链 支持内部CSS 不支持JS 
- background-img BASE64 SVG | 不支持资源外链 支持内部CSS 不支持JS 
- object SVG | 支持资源外链 支持内部CSS 支持内部JS 
- embed SVG | 支持资源外链 支持内部CSS 支持内部JS 
- iframe SVG | 支持资源外链 支持内部CSS 支持内部JS 
+ | SVG 格式                  | 支持列表                            |
+ | ------------------------- | ----------------------------------- |
+ | inline SVG                | 支持资源外链  支持CSS 支持JS        |
+ | img SVG                   | 不支持资源外链 支持内部CSS 不支持JS |
+ | background-img SVG        | 不支持资源外链 支持内部CSS 不支持JS |
+ | background-img BASE64 SVG | 不支持资源外链 支持内部CSS 不支持JS |
+ | object SVG                | 支持资源外链 支持内部CSS 支持内部JS |
+ | embed SVG                 | 支持资源外链 支持内部CSS 支持内部JS |
+ | iframe SVG                | 支持资源外链 支持内部CSS 支持内部JS |
 
 有了这个表, 你会发现几乎在所有情况下. SVG都支持内部CSS. 即在SVG内部写 style 标签定义其自身的样式. (注意: inline SVG 的 style 标签会污染外部 HTML 的 style)
 
@@ -175,18 +175,18 @@ fill 属性设置形状内的颜色。我们把填充颜色设置为红色。
 
 这是暂时最难的一个部分,它的d属性有很多部分
 
-指令 |	参数 |	指令说明
------ | ----- | ----
-M	| xy |	起始点的x , y 座标( move to )
-L	| xy |	从目前点的座标画直线到指定点的x , y 座标( line to )
-H |	x |	从目前点的座标画水平直线到指定的x 轴座标( horizo​​ntal line to )
-V	| y |	从目前点的座标画垂直线到指定的y 轴座标( vertical line to )
-C	| x1 y1 x2 y2 xy |	从目前点的座标画条贝兹曲线到指定点的x, y 座标：其中x1, y1 及x2, y2 为控制点( curve )
-S	| x2 y2 xy	| 从目前点的座标画条反射的贝兹曲线到指定点的x, y 座标：其中x2, y2 为反射的控制点( smooth curve )
-Q	| x1 y1 xy	| 从目前点的座标画条二次贝兹曲线到指定点的x, y 座标：其中x1, y1 为控制点( quadratic Bézier curve )
-T	| xy	| 从目前点的座标画条反射二次贝兹曲线到指定点的x, y 座标：以前一个座标为反射控制点( smooth quadratic Bézier curve )
-A	| rx ry x-axis-rotation large-arc-flag sweep-flag xy	| 从目前点的座标画个椭圆形到指定点的x, y 座标：其中rx, ry 为椭圆形的x 轴及y 轴的半径，x-axis-rotation 是弧线与x 轴的旋转角度，large- arc-flag 则设定1 最大角度的弧线或是0 最小角度的弧线，sweep-flag 设定方向为1 顺时针方向或0 逆时针方向( Arc )
-Z	| |	关闭路径，将目前点的座标与第一个点的座标连接起来( closepath )
+| 指令 | 参数                                               | 指令说明                                                                                                                                                                                                                                       |
+| ---- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| M    | xy                                                 | 起始点的x , y 座标( move to )                                                                                                                                                                                                                  |
+| L    | xy                                                 | 从目前点的座标画直线到指定点的x , y 座标( line to )                                                                                                                                                                                            |
+| H    | x                                                  | 从目前点的座标画水平直线到指定的x 轴座标( horizo​​ntal line to )                                                                                                                                                                               |
+| V    | y                                                  | 从目前点的座标画垂直线到指定的y 轴座标( vertical line to )                                                                                                                                                                                     |
+| C    | x1 y1 x2 y2 xy                                     | 从目前点的座标画条贝兹曲线到指定点的x, y 座标：其中x1, y1 及x2, y2 为控制点( curve )                                                                                                                                                           |
+| S    | x2 y2 xy                                           | 从目前点的座标画条反射的贝兹曲线到指定点的x, y 座标：其中x2, y2 为反射的控制点( smooth curve )                                                                                                                                                 |
+| Q    | x1 y1 xy                                           | 从目前点的座标画条二次贝兹曲线到指定点的x, y 座标：其中x1, y1 为控制点( quadratic Bézier curve )                                                                                                                                               |
+| T    | xy                                                 | 从目前点的座标画条反射二次贝兹曲线到指定点的x, y 座标：以前一个座标为反射控制点( smooth quadratic Bézier curve )                                                                                                                               |
+| A    | rx ry x-axis-rotation large-arc-flag sweep-flag xy | 从目前点的座标画个椭圆形到指定点的x, y 座标：其中rx, ry 为椭圆形的x 轴及y 轴的半径，x-axis-rotation 是弧线与x 轴的旋转角度，large- arc-flag 则设定1 最大角度的弧线或是0 最小角度的弧线，sweep-flag 设定方向为1 顺时针方向或0 逆时针方向( Arc ) |
+| Z    |                                                    | 关闭路径，将目前点的座标与第一个点的座标连接起来( closepath )                                                                                                                                                                                  |
 
 光看怎么能记得住,尝试写一个demo吧. 
 
@@ -242,10 +242,9 @@ $$y=k+a\sin t$$
 
 
 这里需要特别注意的是 **平行于 $x$ 轴** ,而我们根据前文的信息,很难确定椭圆的主轴是否平行于X轴,这就引出了我们的第三个参数,x-axis-rotation,它代表弧线于x轴的夹角.也就是主轴相对于x轴的偏移量.
-
 后面的两个就更简单了,一张图片就能很好诠释
 
-![图呢](https://github.com/magiconch/svg-canvas/blob/master/svg/painting/20140612_1_07.png)
+![](https://mdn.mozillademos.org/files/720/SVGArcs_Flags.png)
 
 
 
@@ -284,13 +283,13 @@ fill的一些属性练习:
 
 ### 练习1. 根据表格画出折线图
 
-年龄 | 身高
----- | ----
-14 | 150
-15 | 156
-16 | 161
-17 | 168
-18 | 170
+| 年龄 | 身高 |
+| ---- | ---- |
+| 14   | 150  |
+| 15   | 156  |
+| 16   | 161  |
+| 17   | 168  |
+| 18   | 170  |
 
 在编写这个练习的时候,需要特别注意: 在使用js或jQuery操作SVG的元素时,不能直接使用createElement来构建元素.因为对于SVG而言,创建SVG元素需要指定命名空间，就像需要在svg标签上设定xmlns为`http://www.w3.org/2000/svg`。正确的构造方式是调用createElentNS()方法，并将`”http://www.w3.org/2000/svg”`作为第一参数传入。
 
@@ -315,12 +314,12 @@ When SVG is parsed as a XML, for compliance with the Namespaces in XML Recommend
 
 我们暂且捏造一份数据,用它来制作一份饼状图
 
-佩奇午餐种类 | 占比 
- ----- | -----
-三明治 | 10%
-汉堡包 | 20%
-蛋炒饭 | 30%
-番茄炒蛋 | 40%
+| 佩奇午餐种类 | 占比 |
+| ------------ | ---- |
+| 三明治       | 10%  |
+| 汉堡包       | 20%  |
+| 蛋炒饭       | 30%  |
+| 番茄炒蛋     | 40%  |
 
 这里需要处理的核心问题就是如何在圆上选点,这里只需要借助椭圆的一般表达式就好啦.
 

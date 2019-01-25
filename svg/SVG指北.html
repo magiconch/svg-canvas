@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>SVG 入门</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <h1 id="svg-%E5%85%A5%E9%97%A8">SVG 入门</h1>
+<h2 id="%E4%BB%80%E4%B9%88%E6%98%AFsvg">什么是SVG</h2>
+<p>SVG 是一种基于 XML 语法的图像格式，全称是可缩放矢量图（Scalable Vector Graphics）。其他图像格式都是基于像素处理的，SVG 则是属于对图像的形状描述，所以它本质上是文本文件，体积较小，且不管放大多少倍都不会失真。</p>
+<h2 id="svg%E7%9A%84%E4%BC%98%E5%8A%A3">SVG的优劣</h2>
+<h4 id="%E4%BC%98%E7%82%B9">优点</h4>
+<ul>
+<li>SVG 可被非常多的工具读取和修改（比如记事本）</li>
+<li>SVG 与 JPEG 和 GIF 图像比起来，尺寸更小，且可压缩性更强。</li>
+<li>SVG 是可伸缩的</li>
+<li>SVG 图像可在任何的分辨率下被高质量地打印</li>
+<li>SVG 可在图像质量不下降的情况下被放大</li>
+<li>SVG 图像中的文本是可选的，同时也是可搜索的（很适合制作地图）</li>
+<li>SVG 可以与 Java 技术一起运行</li>
+<li>SVG 是开放的标准</li>
+<li>SVG 文件是纯粹的 XML</li>
+</ul>
+<h4 id="%E7%BC%BA%E7%82%B9">缺点</h4>
+<p>但是人无完人,也没有绝对的好标准.相对于png来讲,如果图片特别复杂,SVG所需要的大小是远远大于jpg等的.</p>
+<p>为了证明网上的观点,我从维基百科上下载了一份莫奈的&lt;印象 日出&gt;,你可以<a href="https://github.com/magiconch/svg-canvas/blob/master/Claude_Monet%2C_Impression%2C_soleil_levant.jpg">点击这里</a>,你会发现,作为jpg版本的图片大小只有1.8mb,而转换成的<a href="https://github.com/magiconch/svg-canvas/blob/master/cbt38-ct60z.svg">SVG图片</a>,大小足足为4.9mb.这是由于是svg其本质是利用向量(Vector)来描述图片,对于简单的图片而言,其可以使用很少的向量来描述,所以大小优于使用像素来描述的其他格式.</p>
+<p><strong>补充: 在仔细看了各个jpg转SVG的网站,我发现实质上jpg与SVG的转换是指将图片转为base64,所以这种证明的办法似乎存在错误</strong></p>
+<h4 id="%E8%BF%87%E6%97%B6%E7%9A%84%E7%BC%BA%E7%82%B9">过时的缺点:</h4>
+<p>有很多前辈学习SVG时,各大浏览器对其的支持度还不容乐观,但是在今天(2019年1.22),它的支持度已经达到95%以上了.你可以点击下面的链接查看支持度:</p>
+<p><a href="https://caniuse.com/#search=svg">支持度</a></p>
+<h2 id="svg%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F">SVG使用方式</h2>
+<p>（1）使用 <code>&lt;embed&gt;</code> 标签 <strong>(不推荐)</strong></p>
+<p>优势：所有主要浏览器都支持，并允许使用脚本
+缺点：不推荐在HTML4和XHTML中使用（但在HTML5允许）
+示例：</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">embed</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"300px"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"300px"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"img/demo.svg"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"image/svg+xml"</span> /&gt;</span>
+</div></code></pre>
+<p>主要是为了把所有形式都写出来,但是需要注意的是,大多数现代浏览器已经弃用并取消了对浏览器插件的支持，所以如果您希望您的网站可以在普通用户的浏览器上运行，那么依靠 <code>&lt;embed&gt;</code> 通常是不明智的。</p>
+<p>（2）使用 <code>&lt;object&gt;</code> 标签</p>
+<p>HTML <code>&lt;object&gt;</code> 元素（或者称作 HTML 嵌入对象元素）表示引入一个外部资源</p>
+<p>优势：所有主要浏览器都支持，并支持HTML4，XHTML和HTML5标准
+缺点：不允许使用脚本。
+示例：</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">object</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"300px"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"300px"</span> <span class="hljs-attr">data</span>=<span class="hljs-string">"img/demo.svg"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"image/svg+xml"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">object</span>&gt;</span>
+</div></code></pre>
+<p>（3）使用 <code>&lt;iframe&gt;</code> 标签</p>
+<p>优势：所有主要浏览器都支持，并允许使用脚本
+缺点：不推荐在HTML4和XHTML中使用（但在HTML5允许）
+示例：</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">iframe</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"300px"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"300px"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"img/demo.svg"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span> 
+</div></code></pre>
+<p>（4）直接在HTML嵌入SVG代码</p>
+<p>示例：</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"500px"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"500px"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"margin:50px;"</span> <span class="hljs-attr">version</span>=<span class="hljs-string">"1.1"</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.w3.org/2000/svg"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">rect</span> <span class="hljs-attr">x</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">y</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">rx</span>=<span class="hljs-string">"10"</span> <span class="hljs-attr">ry</span>=<span class="hljs-string">"10"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"300"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"300"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0);fill-opacity:0.1;stroke-opacity:0.9;opacity:0.9;"</span>/&gt;</span> 
+<span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
+</div></code></pre>
+<p>（5）使用<code>&lt;img&gt;</code>标签</p>
+<p>示例：</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"img/demo.svg"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"300px"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"300px"</span>/&gt;</span>
+</div></code></pre>
+<p>（6）链接到svg文件</p>
+<p>示例：</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"img/demo.svg"</span>&gt;</span>查看svg<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+</div></code></pre>
+<p>（7）在css中使用</p>
+<p>示例：</p>
+<pre><code class="language-css"><div><span class="hljs-selector-class">.container</span>{
+  <span class="hljs-attribute">background</span>: white <span class="hljs-built_in">url</span>(img/demo.svg) repeat;
+}
+
+</div></code></pre>
+<h2 id="%E5%90%84%E4%B8%AA%E6%96%B9%E5%BC%8Fsvg%E6%94%AF%E6%8C%81%E5%88%97%E8%A1%A8">各个方式SVG支持列表</h2>
+<table>
+<thead>
+<tr>
+<th>SVG 格式</th>
+<th>支持列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>inline SVG</td>
+<td>支持资源外链  支持CSS 支持JS</td>
+</tr>
+<tr>
+<td>img SVG</td>
+<td>不支持资源外链 支持内部CSS 不支持JS</td>
+</tr>
+<tr>
+<td>background-img SVG</td>
+<td>不支持资源外链 支持内部CSS 不支持JS</td>
+</tr>
+<tr>
+<td>background-img BASE64 SVG</td>
+<td>不支持资源外链 支持内部CSS 不支持JS</td>
+</tr>
+<tr>
+<td>object SVG</td>
+<td>支持资源外链 支持内部CSS 支持内部JS</td>
+</tr>
+<tr>
+<td>embed SVG</td>
+<td>支持资源外链 支持内部CSS 支持内部JS</td>
+</tr>
+<tr>
+<td>iframe SVG</td>
+<td>支持资源外链 支持内部CSS 支持内部JS</td>
+</tr>
+</tbody>
+</table>
+<p>有了这个表, 你会发现几乎在所有情况下. SVG都支持内部CSS. 即在SVG内部写 style 标签定义其自身的样式. (注意: inline SVG 的 style 标签会污染外部 HTML 的 style)</p>
+<h2 id="svg%E6%96%87%E4%BB%B6%E6%8E%A2%E7%A7%98">SVG文件探秘</h2>
+<p><em>这里参考自菜鸟教程,涉及到很多XML的内容</em></p>
+<p>一个简单的SVG图形例子：</p>
+<p>这里是SVG文件（SVG文件的保存与SVG扩展）：</p>
+<pre><code class="language-html"><div><span class="hljs-meta">&lt;?xml version="1.0" standalone="no"?&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.w3.org/2000/svg"</span> <span class="hljs-attr">version</span>=<span class="hljs-string">"1.1"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">circle</span> <span class="hljs-attr">cx</span>=<span class="hljs-string">"100"</span> <span class="hljs-attr">cy</span>=<span class="hljs-string">"50"</span> <span class="hljs-attr">r</span>=<span class="hljs-string">"40"</span> <span class="hljs-attr">stroke</span>=<span class="hljs-string">"black"</span>
+  <span class="hljs-attr">stroke-width</span>=<span class="hljs-string">"2"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"red"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
+</div></code></pre>
+<p>SVG 代码解析：</p>
+<p>第一行包含了 XML 声明。请注意 standalone 属性！该属性规定此 SVG 文件是否是&quot;独立的&quot;，或含有对外部文件的引用。</p>
+<p>standalone=&quot;no&quot; 意味着 SVG 文档会引用一个外部文件 - 在这里，是 DTD 文件。</p>
+<p>第二和第三行引用了这个外部的 SVG DTD。该 DTD 位于 &quot;<a href="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd</a>&quot;。该 DTD 位于 W3C，含有所有允许的 SVG 元素。</p>
+<p>SVG 代码以<code>&lt;svg&gt;</code>元素开始，包括开启标签 <code>&lt;svg&gt;</code> 和关闭标签 <code>&lt;/svg&gt;</code> 。这是根元素。width 和 height 属性可设置此 SVG 文档的宽度和高度。version 属性可定义所使用的 SVG 版本，xmlns 属性可定义 SVG 命名空间。</p>
+<p>SVG 的 <code>&lt;circle&gt;</code> 用来创建一个圆。cx 和 cy 属性定义圆中心的 x 和 y 坐标。如果忽略这两个属性，那么圆点会被设置为 (0, 0)。r 属性定义圆的半径。</p>
+<p>stroke 和 stroke-width 属性控制如何显示形状的轮廓。我们把圆的轮廓设置为 2px 宽，黑边框。</p>
+<p>fill 属性设置形状内的颜色。我们把填充颜色设置为红色。</p>
+<p>关闭标签的作用是关闭 SVG 元素和文档本身。</p>
+<p>注释：所有的开启标签必须有关闭标签！</p>
+<h2 id="svg%E6%A0%87%E7%AD%BE">SVG标签</h2>
+<p>这些是常用的标签</p>
+<ul>
+<li>
+<p>text: 创建一个 text 元素</p>
+</li>
+<li>
+<p>circle: 创建一个圆</p>
+</li>
+<li>
+<p>rect: 创建一个矩形</p>
+</li>
+<li>
+<p>line: 创建一条线</p>
+</li>
+<li>
+<p>path: 在两点之间创建一条路径</p>
+</li>
+<li>
+<p>textPath: 在两点之间创建一条路径，并创建一个链接文本元素</p>
+</li>
+<li>
+<p>polygon: 允许创建任意类型的多边形</p>
+</li>
+<li>
+<p>g: 单独的元素</p>
+<ul>
+<li>&lt;g&gt;
+元素g是用来组合对象的容器。添加到g元素上的变换会应用到其所有的子元素上。添加到g元素的属性会被其所有的子元素继承。有点像div的感觉</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>这么看起来似乎SVG很简单,但是随着慢慢学习,发现单是一个path就够我搞得了.</p>
+<p>这里甚至还涉及到了很多数学知识.</p>
+<p>所幸找到了一个台湾大佬写的博客<a href="https://www.oxxostudio.tw/articles/201406/svg-06-stroke.html">SVG研究之路</a>我在这个专栏获益匪浅.</p>
+<h3 id="path">path</h3>
+<p>这是暂时最难的一个部分,它的d属性有很多部分</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>参数</th>
+<th>指令说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td>xy</td>
+<td>起始点的x , y 座标( move to )</td>
+</tr>
+<tr>
+<td>L</td>
+<td>xy</td>
+<td>从目前点的座标画直线到指定点的x , y 座标( line to )</td>
+</tr>
+<tr>
+<td>H</td>
+<td>x</td>
+<td>从目前点的座标画水平直线到指定的x 轴座标( horizo​​ntal line to )</td>
+</tr>
+<tr>
+<td>V</td>
+<td>y</td>
+<td>从目前点的座标画垂直线到指定的y 轴座标( vertical line to )</td>
+</tr>
+<tr>
+<td>C</td>
+<td>x1 y1 x2 y2 xy</td>
+<td>从目前点的座标画条贝兹曲线到指定点的x, y 座标：其中x1, y1 及x2, y2 为控制点( curve )</td>
+</tr>
+<tr>
+<td>S</td>
+<td>x2 y2 xy</td>
+<td>从目前点的座标画条反射的贝兹曲线到指定点的x, y 座标：其中x2, y2 为反射的控制点( smooth curve )</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>x1 y1 xy</td>
+<td>从目前点的座标画条二次贝兹曲线到指定点的x, y 座标：其中x1, y1 为控制点( quadratic Bézier curve )</td>
+</tr>
+<tr>
+<td>T</td>
+<td>xy</td>
+<td>从目前点的座标画条反射二次贝兹曲线到指定点的x, y 座标：以前一个座标为反射控制点( smooth quadratic Bézier curve )</td>
+</tr>
+<tr>
+<td>A</td>
+<td>rx ry x-axis-rotation large-arc-flag sweep-flag xy</td>
+<td>从目前点的座标画个椭圆形到指定点的x, y 座标：其中rx, ry 为椭圆形的x 轴及y 轴的半径，x-axis-rotation 是弧线与x 轴的旋转角度，large- arc-flag 则设定1 最大角度的弧线或是0 最小角度的弧线，sweep-flag 设定方向为1 顺时针方向或0 逆时针方向( Arc )</td>
+</tr>
+<tr>
+<td>Z</td>
+<td></td>
+<td>关闭路径，将目前点的座标与第一个点的座标连接起来( closepath )</td>
+</tr>
+</tbody>
+</table>
+<p>光看怎么能记得住,尝试写一个demo吧.</p>
+<p><a href="http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/simpledemo.html">预览效果</a></p>
+<p><a href="https://github.com/magiconch/svg-canvas/blob/master/svg/simpledemo.html">源代码</a></p>
+<h3 id="%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF">贝塞尔曲线</h3>
+<p>直接看demo,这个实际上就是一个调整曲线的过程</p>
+<p><a href="http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/B%C3%A9ziercurve/curve.html">demo</a></p>
+<h3 id="%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%BC%A7%E7%BA%BF">深入理解弧线</h3>
+<p>这里似乎是SVG中最难理解的部分,但是对于数学专业似乎很好理解~</p>
+<p>首先我们先来看一个普通的A参数长什么样子</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M50 50 A50 10,0 0 0 100 0"</span> <span class="hljs-attr">stroke</span>=<span class="hljs-string">"#f00"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
+</div></code></pre>
+<ul>
+<li>rx ： 椭圆的x 轴半径( 根据不同的终点换算成比例 )</li>
+<li>ry ： 椭圆的y 轴半径( 根据不同的终点换算成比例 )</li>
+<li>x-axis-rotation ： 弧线与x 轴的夹角</li>
+<li>large-arc-flag ： 1 为大角度弧线，0 为小角度弧线( 必须有三个点 )</li>
+<li>sweep-flag ： 1 为顺时针方向，0 为逆时针方向</li>
+<li>x ： 终点x 座标</li>
+<li>y ： 终点y 座标</li>
+</ul>
+<p>这里的 rx 和 ry很好理解,就是椭圆的两个轴长.</p>
+<p>而x , y 不但是终点,也是椭圆上的一个点.</p>
+<p>M是起点,这个也不需要多说.</p>
+<p>所以抛开中间三个看不懂的参数,我们现在已经有了椭圆的长轴长度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">rx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">x</span></span></span></span>短轴长度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">ry</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>,还有起点M和终点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(x,y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>,</p>
+<p>已知起点和终点都在椭圆上,我们就可以套用椭圆的一般方程确定位置.</p>
+<p>我从维基百科上找到了椭圆的一般方程定义.</p>
+<p><em>中心位于点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>h</mi><mo separator="true">,</mo><mi>k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(h,k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span>的主轴平行于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 轴的椭圆由如下方程指定</em></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mi>h</mi><mo>+</mo><mi>a</mi><mi>cos</mi><mo>⁡</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">x=h+a\cos t
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">cos</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span></span></span></span></span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mi>k</mi><mo>+</mo><mi>a</mi><mi>sin</mi><mo>⁡</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">y=k+a\sin t
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66786em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">sin</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span></span></span></span></span></p>
+<p>这里需要特别注意的是 <strong>平行于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 轴</strong> ,而我们根据前文的信息,很难确定椭圆的主轴是否平行于X轴,这就引出了我们的第三个参数,x-axis-rotation,它代表弧线于x轴的夹角.也就是主轴相对于x轴的偏移量.
+后面的两个就更简单了,一张图片就能很好诠释</p>
+<p><img src="https://mdn.mozillademos.org/files/720/SVGArcs_Flags.png" alt=""></p>
+<p>后记: 后来还找到了一个特别详细的文章,<a href="https://www.w3cplus.com/svg/svg-path.html">SVG之旅：路径</a></p>
+<p><strong>在这里遇到的问题:</strong>
+这个H和V的单位是什么?</p>
+<p>最开始在纠结H和V的单位是什么,后来释然了,因为H和V的单位其实就相当于L的横纵坐标,在W3C里也是这样写的.这也是SVG与其他格式的本质区别,SVG是一个标准的笛卡尔坐标系,在历来的数学学习中,从来没有一个坐标系有单位.只有现实应用的时候,会产生单位的对应.SVG相当于对图像的抽象.</p>
+<p>附:W3C原文:</p>
+<pre><code><div>When a relative l command is used, the end point of the line is (cpx + x, cpy + y).
+
+When a relative h command is used, the end point of the line is (cpx + x, cpy). This means that an h command with a positive x value draws a horizontal line in the direction of the positive x-axis.
+
+When a relative v command is used, the end point of the line is (cpx, cpy + y).
+</div></code></pre>
+<h2 id="%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%BB%83%E4%B9%A0">一些基础练习</h2>
+<p>text的一些属性练习:</p>
+<p><a href="http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/text.html">预览</a></p>
+<p><a href="https://github.com/magiconch/svg-canvas/blob/master/svg/text.html">代码</a></p>
+<p>fill的一些属性练习:</p>
+<p><a href="http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/fill.html">预览</a></p>
+<p><a href="https://github.com/magiconch/svg-canvas/blob/master/svg/fill.html">代码</a></p>
+<h2 id="%E5%90%8E%E7%BB%AD%E7%BB%83%E4%B9%A0">后续练习</h2>
+<h3 id="%E7%BB%83%E4%B9%A01-%E6%A0%B9%E6%8D%AE%E8%A1%A8%E6%A0%BC%E7%94%BB%E5%87%BA%E6%8A%98%E7%BA%BF%E5%9B%BE">练习1. 根据表格画出折线图</h3>
+<table>
+<thead>
+<tr>
+<th>年龄</th>
+<th>身高</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14</td>
+<td>150</td>
+</tr>
+<tr>
+<td>15</td>
+<td>156</td>
+</tr>
+<tr>
+<td>16</td>
+<td>161</td>
+</tr>
+<tr>
+<td>17</td>
+<td>168</td>
+</tr>
+<tr>
+<td>18</td>
+<td>170</td>
+</tr>
+</tbody>
+</table>
+<p>在编写这个练习的时候,需要特别注意: 在使用js或jQuery操作SVG的元素时,不能直接使用createElement来构建元素.因为对于SVG而言,创建SVG元素需要指定命名空间，就像需要在svg标签上设定xmlns为<code>http://www.w3.org/2000/svg</code>。正确的构造方式是调用createElentNS()方法，并将<code>”http://www.w3.org/2000/svg”</code>作为第一参数传入。</p>
+<p>W3C是这样写的</p>
+<pre><code><div>When SVG is parsed as a XML, for compliance with the Namespaces in XML Recommendation [xml-names], an SVG namespace declaration must be provided so that all SVG elements are identified as belonging to the SVG namespace.
+</div></code></pre>
+<p>关于更多的使用JS操作SVG的方法可以参考这里</p>
+<p><a href="http://blog.iderzheng.com/something-about-svg-with-javascript/">JavaScript操作SVG的一些知识</a></p>
+<p>最后实现的效果就是一个简单的折线图.</p>
+<p><a href="http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/linechart/Linechart.html">实际效果</a></p>
+<p><a href="https://github.com/magiconch/svg-canvas/blob/master/svg/linechart/Linechart.html">源代码</a></p>
+<h3 id="%E7%BB%83%E4%B9%A02-%E6%A0%B9%E6%8D%AE%E8%A1%A8%E6%A0%BC%E7%94%BB%E5%87%BA%E9%A5%BC%E7%8A%B6%E5%9B%BE">练习2. 根据表格画出饼状图</h3>
+<p>我们都知道饼状图是为了突出数据之间的比例.</p>
+<p>我们暂且捏造一份数据,用它来制作一份饼状图</p>
+<table>
+<thead>
+<tr>
+<th>佩奇午餐种类</th>
+<th>占比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>三明治</td>
+<td>10%</td>
+</tr>
+<tr>
+<td>汉堡包</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>蛋炒饭</td>
+<td>30%</td>
+</tr>
+<tr>
+<td>番茄炒蛋</td>
+<td>40%</td>
+</tr>
+</tbody>
+</table>
+<p>这里需要处理的核心问题就是如何在圆上选点,这里只需要借助椭圆的一般表达式就好啦.</p>
+<p><a href="http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/piechart/piechart.html">实际效果</a>
+<a href="https://github.com/magiconch/svg-canvas/blob/master/svg/piechart/piechart.html">源代码</a></p>
+<h3 id="%E7%BB%83%E4%B9%A03-%E5%AE%9E%E7%8E%B0%E5%8F%AF%E4%BB%A5%E9%9A%8F%E6%84%8F%E6%8B%96%E6%8B%BD%E7%9A%84%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF">练习3. 实现可以随意拖拽的贝塞尔曲线</h3>
+<p>因为贝塞尔曲线有些理解困难,我制作了一个可以随意拖拽的贝塞尔曲线,只要拖动点P0就可以方便的看到曲线的变化,这里只是用了一些简单的js方法.</p>
+<p><a href="http://htmlpreview.github.io/?https://github.com/magiconch/svg-canvas/blob/master/svg/B%C3%A9ziercurve/curve.html">实际效果</a>
+<a href="https://github.com/magiconch/svg-canvas/blob/master/svg/B%C3%A9ziercurve/curve.html">源代码</a></p>
+<h3 id="%E7%BB%83%E4%B9%A04-%E7%BB%83%E4%B9%A0%E5%B9%B6%E9%98%85%E8%AF%BB%E4%B8%80%E4%BA%9B%E5%8A%A8%E7%94%BB%E4%BB%A3%E7%A0%81">练习4. 练习并阅读一些动画代码</h3>
+<p><a href="https://github.com/magiconch/svg-canvas/tree/master/svg/at">仓库地址</a></p>
+<p>一些参考链接 :</p>
+<p><a href="http://tutorials.jenkov.com/svg/svg-examples.html">jenkov</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/24168144">数据可视化：你想知道的经典图表全在这</a></p>
+
+    </body>
+    </html>
