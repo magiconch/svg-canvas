@@ -6,3 +6,4 @@
 
 - SVG指北
 
+- canvas
