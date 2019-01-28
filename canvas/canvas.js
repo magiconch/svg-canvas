@@ -1,0 +1,14 @@
+let testCanvas = document.getElementById('test');
+let context =  testCanvas.getContext('2d');
+context.beginPath();
+context.arc(150, 75, 50, 0, Math.PI*2);
+context.strokeStyle = '#f36';
+context.stroke();
+context.beginPath();
+context.arc(100, 100, 20, 0, Math.PI*2);
+context.strokeStyle = '#f36';
+context.stroke();
+context.beginPath();
+context.arc(200, 100, 20, 0, Math.PI*2);
+context.strokeStyle = '#f36';
+context.stroke();
