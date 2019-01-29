@@ -71,8 +71,8 @@ function drawSolidLineSvg(lineBaseData) {
     }
     let solidLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     solidLine.setAttribute('x1', lineBaseData['startX']);
-    solidLine.setAttribute('y1', lineBaseData['endX']);
-    solidLine.setAttribute('x2', lineBaseData['startY']);
+    solidLine.setAttribute('y1', lineBaseData['startY']);
+    solidLine.setAttribute('x2', lineBaseData['endX']);
     solidLine.setAttribute('y2', lineBaseData['endY']);
     solidLine.setAttribute('stroke-width', lineBaseData['lineWidth']);
     solidLine.setAttribute('stroke', lineBaseData['color']);
@@ -85,8 +85,8 @@ function drawSolidLineSvg(lineBaseData) {
 function drawDashedLineSvg(lineBaseData) { // 绘制虚线的SVG方法
     let dashedLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     dashedLine.setAttribute('x1', lineBaseData['startX']);
-    dashedLine.setAttribute('y1', lineBaseData['endX']);
-    dashedLine.setAttribute('x2', lineBaseData['startY']);
+    dashedLine.setAttribute('y1', lineBaseData['startY']);
+    dashedLine.setAttribute('x2', lineBaseData['endX']);
     dashedLine.setAttribute('y2', lineBaseData['endY']);
     dashedLine.setAttribute('stroke-width', lineBaseData['lineWidth']);
     dashedLine.setAttribute('stroke', lineBaseData['color']);
@@ -144,16 +144,15 @@ function drawSimpleRect(rectBaseData, isCanvas) {
 }
 
 function drawRoundedCornerRectCanvas(rectBaseData) {
-    
+
 }
 
 function drawRoundedCornerRectSvg(rectBaseData) {
-   
+
 }
 
+function drawSimpleRectSvg(rectBaseData) {
 
-function drawSimpleRectSvg(rectBaseData) { 
-    
 }
 
 function drawSimpleRectCanvas(rectBaseData) {
@@ -162,9 +161,37 @@ function drawSimpleRectCanvas(rectBaseData) {
     ctx.lineWidth = rectBaseData['lineWidth'];
 
     if (rectBaseData['isFill']) { // 填充矩形
-
+        ctx.fillStyle = rectBaseData['color'];
+        ctx.fill();
     } else {
         // TODO
     }
 }
 
+function lineTest(isCanvas, isSolid) {
+    // @param {Number} startX - 线段起点x轴坐标 
+    // @param {Number} startY - 线段起点y轴坐标 
+    // @param {Number} endX - 线段终点x轴坐标
+    // @param {Number} endY - 线段终点y轴坐标 
+    // @param {Number} lineWidth - 线宽 
+    // @param {String} color - 线颜色
+    // @param {Array} setLineDash - 点划线间距
+    lineBaseData['startX'] = 10;
+    lineBaseData['startY'] = 10;
+    lineBaseData['endX'] = 100;
+    lineBaseData['endY'] = 150;
+    lineBaseData['lineWidth'] = 5;
+    lineBaseData['color'] = '#fff000';
+    lineBaseData['setLineDash'] = [2, 5, 2];
+    if (isSolid) {
+        lineBaseData['startX'] = 50;
+        lineBaseData['startY'] = 50;
+        lineBaseData['endX'] = 150;
+        lineBaseData['endY'] = 200;
+    }
+    drawLine(lineBaseData, isCanvas, isSolid);
+}
+lineTest(true, true);
+lineTest(true, false);
+lineTest(false, true);
+lineTest(false, false);
