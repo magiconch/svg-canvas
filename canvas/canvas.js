@@ -34,7 +34,13 @@ context.ellipse(150, 200, 80, 40, Math.PI / 4, 0, 2 * Math.PI);
 context.stroke();
 // 椭圆2
 context.beginPath();
-context.ellipse(150, 200, 80, 160, Math.PI / 7, 0 , Math.PI);
+context.ellipse(150, 200, 80, 160, 0, Math.PI/2, Math.PI);
 context.stroke();
 
-// 
+context.beginPath();
+context.moveTo(200,200);
+context.lineTo(200,300);
+context.lineTo(300,300);
+context.stroke();
+
+context.beginPath();

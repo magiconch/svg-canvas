@@ -11,13 +11,17 @@ function initDrawCanvas(canvas, ctx) {
 
 function initDrawSvg() {}
 
-// @param {Number} startX - 线段起点x轴坐标 
-// @param {Number} startY - 线段起点y轴坐标 
-// @param {Number} endX - 线段终点x轴坐标
-// @param {Number} endY - 线段终点y轴坐标 
-// @param {Number} lineWidth - 线宽 
-// @param {String} color - 线颜色
-// @param {Array} setLineDash - 点划线间距
+/** 
+ * 
+ * 
+ * @param  {Number} startX - 线段起点x轴坐标 
+ * @param  {Number} startY - 线段起点y轴坐标 
+ * @param {Number} endX - 线段终点x轴坐标
+ * @param {Number} endY - 线段终点y轴坐标 
+ * @param {Number} lineWidth - 线宽 
+ * @param {String} color - 线颜色
+ * @param {Array} setLineDash - 点划线间距
+ */
 lineBaseData = {
     'startX': 0,
     'startY': 0,
@@ -28,6 +32,13 @@ lineBaseData = {
     'setLineDash': []
 }
 
+/**
+ *
+ *
+ * @param {*} lineBaseData - 描述线段的基础数据
+ * @param {boolean} isCanvas - 是否使用canvas作画
+ * @param {boolean} isSolid - 是否是实线
+ */
 function drawLine(lineBaseData, isCanvas, isSolid) {
     if (isSolid) {
         drawSolidLine(lineBaseData, isCanvas);
@@ -79,9 +90,6 @@ function drawSolidLineSvg(lineBaseData) {
     svg.appendChild(solidLine);
 }
 
-
-
-
 function drawDashedLineSvg(lineBaseData) { // 绘制虚线的SVG方法
     let dashedLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     dashedLine.setAttribute('x1', lineBaseData['startX']);
@@ -106,18 +114,40 @@ function drawDashedLineCanvas(lineBaseData) { // 绘制虚线的canvas方法
     ctx.restore();
 }
 
-rectBaseData = {
+
+/**
+ * 
+ * @param {Number} x - 起点x轴坐标 
+ * @param {Number} y - 起点y轴坐标 
+ * @param {Number} width - 矩形宽度
+ * @param {Number} height - 矩形高度
+ * @param {Boolean} isFill - 是否绘制填充，true填充，false设置边框矩形
+ * @param {String} color - 线颜色
+ * @param {Array} rx - x轴上的圆角半径
+ * @param {Number} ry - y轴上的圆角半径
+ */
+let rectBaseData = {
     'x': 0,
     'y': 0,
     'width': 0,
     'height': 0,
     'isFill': true,
-    'color': '#000',
+    'color': '#FF0000',
     'rx': 0,
     'ry': 0
 }
 
-function drawrect(rectBaseData, isCanvas, isRoundedCorner) {
+
+
+
+/**
+ *
+ *
+ * @param {object} rectBaseData - 矩形的数据
+ * @param {boolean} isCanvas - 是否采用Canvas作画
+ * @param {boolean} isRoundedCorner - 是否是圆角矩形
+ */
+function drawRect(rectBaseData, isCanvas, isRoundedCorner) {
     if (isRoundedCorner) {
         drawRoundedCornerRect(rectBaseData, isCanvas);
     } else {
@@ -143,46 +173,104 @@ function drawSimpleRect(rectBaseData, isCanvas) {
     }
 }
 
+
 function drawRoundedCornerRectCanvas(rectBaseData) {
-
-}
-
-function drawRoundedCornerRectSvg(rectBaseData) {
-
-}
-
-function drawSimpleRectSvg(rectBaseData) {
-
-}
-
-function drawSimpleRectCanvas(rectBaseData) {
+    // 如果 rx或ry大于width,实际值等于的一半
     ctx.save();
-    ctx.strokeStyle = rectBaseData['color'];
-    ctx.lineWidth = rectBaseData['lineWidth'];
+    ctx.beginPath();
+    const radiusX = rectBaseData['rx'];
+    const radiusY = rectBaseData['ry'];
+    const rotation = 0;
+    let ellipseX = rectBaseData['x'] + rectBaseData['rx'];
+    let ellipseY = rectBaseData['y'] + rectBaseData['ry'];
+    let startAngle = Math.PI;
+    let endAngle = Math.PI * 3 / 2;
+    // 左上角
+    ctx.ellipse(ellipseX, ellipseY, radiusX, radiusY, rotation, startAngle, endAngle);
+    ellipseX = rectBaseData['x'] + rectBaseData['width'] - rectBaseData['rx'];
+    startAngle = endAngle;
+    endAngle = Math.PI * 2;
+    // 右上角
+    ctx.ellipse(ellipseX, ellipseY, radiusX, radiusY, rotation, startAngle, endAngle);
+    ellipseY = rectBaseData['y'] + rectBaseData['width'] - rectBaseData['ry'];
+    startAngle = endAngle;
+    endAngle = Math.PI / 2;
+    // 左下角
+    ctx.ellipse(ellipseX, ellipseY, radiusX, radiusY, rotation, startAngle, endAngle);
+    ellipseX = rectBaseData['x'] + rectBaseData['rx'];
+    startAngle = endAngle;
+    endAngle = Math.PI;
+    // 右下角
+    ctx.ellipse(ellipseX, ellipseY, radiusX, radiusY, rotation, startAngle, endAngle);
+    ctx.closePath();
 
     if (rectBaseData['isFill']) { // 填充矩形
         ctx.fillStyle = rectBaseData['color'];
         ctx.fill();
     } else {
-        // TODO
+        ctx.strokeStyle = rectBaseData['color'];
+        ctx.stroke();
     }
+    ctx.restore();
+
+}
+
+function drawRoundedCornerRectSvg(rectBaseData) {
+    let RoundedCornerRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    RoundedCornerRect.setAttribute('x', rectBaseData['x']);
+    RoundedCornerRect.setAttribute('y', rectBaseData['y']);
+    RoundedCornerRect.setAttribute('width', rectBaseData['width']);
+    RoundedCornerRect.setAttribute('height', rectBaseData['height']);
+    RoundedCornerRect.setAttribute('rx', rectBaseData['rx']);
+    RoundedCornerRect.setAttribute('ry', rectBaseData['ry']);
+    if (rectBaseData['isFill']) {
+        RoundedCornerRect.setAttribute('fill', rectBaseData['color']);
+        RoundedCornerRect.setAttribute('stroke-width', 0);
+    } else {
+        RoundedCornerRect.setAttribute('fill-opacity', 0);
+        RoundedCornerRect.setAttribute('stroke', rectBaseData['color']);
+
+    }
+    svg.appendChild(RoundedCornerRect);
+}
+
+function drawSimpleRectSvg(rectBaseData) {
+    let simpleRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    simpleRect.setAttribute('x', rectBaseData['x']);
+    simpleRect.setAttribute('y', rectBaseData['y']);
+    simpleRect.setAttribute('width', rectBaseData['width']);
+    simpleRect.setAttribute('height', rectBaseData['height']);
+    if (rectBaseData['isFill']) {
+        simpleRect.setAttribute('fill', rectBaseData['color']);
+        simpleRect.setAttribute('stroke-width', 0);
+    } else {
+        simpleRect.setAttribute('fill-opacity', 0);
+        simpleRect.setAttribute('stroke', rectBaseData['color']);
+
+    }
+    svg.appendChild(simpleRect);
+}
+
+function drawSimpleRectCanvas(rectBaseData) {
+    ctx.save();
+    if (rectBaseData['isFill']) { // 填充矩形
+        ctx.fillStyle = rectBaseData['color'];
+        ctx.fillRect(rectBaseData['x'], rectBaseData['y'], rectBaseData['width'], rectBaseData['height']);
+    } else {
+        ctx.strokeStyle = rectBaseData['color'];
+        ctx.strokeRect(rectBaseData['x'], rectBaseData['y'], rectBaseData['width'], rectBaseData['height']);
+    }
+    ctx.restore();
 }
 
 function lineTest(isCanvas, isSolid) {
-    // @param {Number} startX - 线段起点x轴坐标 
-    // @param {Number} startY - 线段起点y轴坐标 
-    // @param {Number} endX - 线段终点x轴坐标
-    // @param {Number} endY - 线段终点y轴坐标 
-    // @param {Number} lineWidth - 线宽 
-    // @param {String} color - 线颜色
-    // @param {Array} setLineDash - 点划线间距
     lineBaseData['startX'] = 10;
     lineBaseData['startY'] = 10;
     lineBaseData['endX'] = 100;
     lineBaseData['endY'] = 150;
     lineBaseData['lineWidth'] = 5;
-    lineBaseData['color'] = '#fff000';
-    lineBaseData['setLineDash'] = [2, 5, 2];
+    lineBaseData['color'] = '#ff0000';
+    lineBaseData['setLineDash'] = [2, 10, 2];
     if (isSolid) {
         lineBaseData['startX'] = 50;
         lineBaseData['startY'] = 50;
@@ -191,7 +279,29 @@ function lineTest(isCanvas, isSolid) {
     }
     drawLine(lineBaseData, isCanvas, isSolid);
 }
-lineTest(true, true);
-lineTest(true, false);
-lineTest(false, true);
-lineTest(false, false);
+
+function rectTest(isCanvas, isRoundedCorner) {
+    rectBaseData['x'] = 10;
+    rectBaseData['y'] = 10;
+    rectBaseData['width'] = 200;
+    rectBaseData['height'] = 200;
+    rectBaseData['isFill'] = true;
+    rectBaseData['rx'] = 50;
+    rectBaseData['ry'] = 100;
+    if (isRoundedCorner) {
+        rectBaseData['x'] = 300;
+        rectBaseData['y'] = 300;
+    }
+    drawRect(rectBaseData, isCanvas, isRoundedCorner);
+}
+
+function arcTest() {}
+
+// lineTest(true, true);
+// lineTest(true, false);
+// lineTest(false, true);
+// lineTest(false, false);
+rectTest(true, true);
+rectTest(true, false);
+rectTest(false, true);
+rectTest(false, false);

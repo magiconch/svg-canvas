@@ -84,12 +84,12 @@ function drawRect(x, y, width, height, isFill, color) {
   rect.setAttribute('height',height);
   if (isFill) {
     rect.setAttribute('fill',color);
-    rect.setAttribute('stroke',color);
+    rect.setAttribute('stroke-width',0);
   } else {
     rect.setAttribute('fill-opacity',0);
     rect.setAttribute('stroke',color);
   }
   svg.appendChild(rect);
 }
-// drawRect(10, 10, 100, 50, true, 'red');
-// drawRect(200, 200 , 50, 50, false, 'green');
+drawRect(10, 10, 100, 50, true, 'red');
+drawRect(200, 200 , 50, 50, false, 'green');

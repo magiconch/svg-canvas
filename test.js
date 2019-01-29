@@ -36,18 +36,17 @@ function drawSimpleRect(rectBaseData, isCanvas) {
 }
 
 function drawRoundedCornerRectCanvas(rectBaseData) {
-    
+
 }
 
 function drawRoundedCornerRectSvg(rectBaseData) {
-   
+
 }
 
+function drawSimpleRectSvg(rectBaseData) {
 
-function drawSimpleRectSvg(rectBaseData) { 
-    
 }
 
-function drawSimpleRectCanvas(rectBaseData) { 
+function drawSimpleRectCanvas(rectBaseData) {
     
 }
