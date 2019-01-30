@@ -251,6 +251,11 @@ function drawSimpleRectSvg(rectBaseData) {
     svg.appendChild(simpleRect);
 }
 
+/**
+ *
+ *
+ * @param {*} rectBaseData
+ */
 function drawSimpleRectCanvas(rectBaseData) {
     ctx.save();
     if (rectBaseData['isFill']) { // 填充矩形

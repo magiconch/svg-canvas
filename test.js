@@ -1,52 +1,66 @@
-rectBaseData = {
+arcBaseData = {
     'x': 0,
     'y': 0,
-    'width': 0,
-    'height': 0,
+    'radius': 5,
+    'startAngle': 0,
+    'endAngle': 0,
+    'anticlockwise': true,
     'isFill': true,
-    'color': '#000',
-    'rx': 0,
-    'ry': 0
+    'isOnlyArc': true, // 是否仅绘制弧边
+    'color': '#000'
 }
 
-function drawrect(rectBaseData, isCanvas, isRoundedCorner) {
-    if (isRoundedCorner) {
-        drawRoundedCornerRect(rectBaseData, isCanvas);
-    } else {
-        drawSimpleRect(rectBaseData, isCanvas);
-    }
-}
-
-// 绘制圆角矩形
-function drawRoundedCornerRect(rectBaseData, isCanvas) {
+// 绘制圆
+function drawArc(arcBaseData, isCanvas) {
     if (isCanvas) {
-        drawRoundedCornerRectCanvas(rectBaseData);
+        drawArcCanvas(arcBaseData);
     } else {
-        drawRoundedCornerRectSvg(rectBaseData);
+        drawArcSvg(arcBaseData);
     }
 }
 
-// 绘制普通矩形
-function drawSimpleRect(rectBaseData, isCanvas) {
+// 绘制圆弧
+function drawSector(sectorBaseData, isCanvas) {
     if (isCanvas) {
-        drawSimpleRectCanvas(rectBaseData);
+        drawSectorCanvas(sectorBaseData);
     } else {
-        drawSimpleRectSvg(rectBaseData);
+        drawSectorSvg(sectorBaseData);
     }
 }
 
-function drawRoundedCornerRectCanvas(rectBaseData) {
+function drawArcCanvas(arcBaseData) {
+    if (isFill) {
+        ctx.fillStyle = color;
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(arcBaseData['x'], arcBaseData['y'], arcBaseData['radius'], getAngle(startAngle), getAngle(endAngle), arcBaseData['anticlockwise']);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    } else {
+        ctx.strokeStyle = color;
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(arcBaseData['x'], arcBaseData['y'], arcBaseData['radius'], getAngle(startAngle), getAngle(endAngle), arcBaseData['anticlockwise']);
+        if (isOnlyArc) {
+
+        } else {
+            ctx.closePath();
+        }
+        ctx.stroke();
+        ctx.restore();
+    }
 
 }
 
-function drawRoundedCornerRectSvg(rectBaseData) {
+function drawArcSvg(arcBaseData) {
 
 }
 
-function drawSimpleRectSvg(rectBaseData) {
+function drawSectorSvg(sectorBaseData) {
 
 }
 
-function drawSimpleRectCanvas(rectBaseData) {
-    
+function drawSectorCanvas(sectorBaseData) {
+
 }
