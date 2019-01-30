@@ -1,6 +1,7 @@
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let svg = document.getElementById('svg');
+
 function initDrawCanvas(canvas, ctx) {
     this.canvas = canvas;
     this.ctx = ctx;
@@ -11,11 +12,20 @@ function initDrawSvg(svg) {
 }
 
 function initDraw() {
-    initDrawCanvas(canvas,ctx);
+    initDrawCanvas(canvas, ctx);
     initDrawSvg(svg);
 }
 
 initDraw();
+
+function makeSVG(tag, attrs) {
+    var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (var k in attrs)
+        el.setAttribute(k, attrs[k]);
+    return el;
+
+}
+
 /** 
  * 
  * 
@@ -82,7 +92,7 @@ let sectorBaseData = {
     'color': '#fff000'
 }
 
-let polylineBaseData  = {
+let polylineBaseData = {
     'pointList': [],
     'isMountNode': true,
     'color': '#ffff00',
@@ -139,25 +149,28 @@ function drawSolidLineSvg(lineBaseData) {
     if (lineBaseData['setLineDash']) {
         // TODO
     }
-    let solidLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    solidLine.setAttribute('x1', lineBaseData['startX']);
-    solidLine.setAttribute('y1', lineBaseData['startY']);
-    solidLine.setAttribute('x2', lineBaseData['endX']);
-    solidLine.setAttribute('y2', lineBaseData['endY']);
-    solidLine.setAttribute('stroke-width', lineBaseData['lineWidth']);
-    solidLine.setAttribute('stroke', lineBaseData['color']);
+    let solidLine = makeSVG('line', {
+        'x1': lineBaseData['startX'],
+        'y1': lineBaseData['startY'],
+        'x2': lineBaseData['endX'],
+        'y2': lineBaseData['endY'],
+        'stroke-width': lineBaseData['lineWidth'],
+        'stroke': lineBaseData['color']
+    })
+
     svg.appendChild(solidLine);
 }
 
 function drawDashedLineSvg(lineBaseData) { // 绘制虚线的SVG方法
-    let dashedLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    dashedLine.setAttribute('x1', lineBaseData['startX']);
-    dashedLine.setAttribute('y1', lineBaseData['startY']);
-    dashedLine.setAttribute('x2', lineBaseData['endX']);
-    dashedLine.setAttribute('y2', lineBaseData['endY']);
-    dashedLine.setAttribute('stroke-width', lineBaseData['lineWidth']);
-    dashedLine.setAttribute('stroke', lineBaseData['color']);
-    dashedLine.setAttribute('stroke-dasharray', lineBaseData['setLineDash']);
+    let dashedLine = makeSVG('line', {
+        'x1': lineBaseData['startX'],
+        'y1': lineBaseData['startY'],
+        'x2': lineBaseData['endX'],
+        'y2': lineBaseData['endY'],
+        'stroke-width': lineBaseData['lineWidth'],
+        'stroke': lineBaseData['color'],
+        'stroke-dasharray': lineBaseData['setLineDash']
+    })
     svg.appendChild(dashedLine);
 }
 
@@ -251,13 +264,15 @@ function drawRoundedCornerRectCanvas(rectBaseData) {
 }
 
 function drawRoundedCornerRectSvg(rectBaseData) {
-    let RoundedCornerRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    RoundedCornerRect.setAttribute('x', rectBaseData['x']);
-    RoundedCornerRect.setAttribute('y', rectBaseData['y']);
-    RoundedCornerRect.setAttribute('width', rectBaseData['width']);
-    RoundedCornerRect.setAttribute('height', rectBaseData['height']);
-    RoundedCornerRect.setAttribute('rx', rectBaseData['rx']);
-    RoundedCornerRect.setAttribute('ry', rectBaseData['ry']);
+    let RoundedCornerRect = makeSVG('rect', {
+        'x': rectBaseData['x'],
+        'y': rectBaseData['y'],
+        'width': rectBaseData['width'],
+        'height': rectBaseData['height'],
+        'rx': rectBaseData['rx'],
+        'ry': rectBaseData['ry']
+    })
+
     if (rectBaseData['isFill']) {
         RoundedCornerRect.setAttribute('fill', rectBaseData['color']);
         RoundedCornerRect.setAttribute('stroke-width', 0);
@@ -270,11 +285,13 @@ function drawRoundedCornerRectSvg(rectBaseData) {
 }
 
 function drawSimpleRectSvg(rectBaseData) {
-    let simpleRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    simpleRect.setAttribute('x', rectBaseData['x']);
-    simpleRect.setAttribute('y', rectBaseData['y']);
-    simpleRect.setAttribute('width', rectBaseData['width']);
-    simpleRect.setAttribute('height', rectBaseData['height']);
+    let simpleRect = makeSVG('rect', {
+        'x': rectBaseData['x'],
+        'y': rectBaseData['y'],
+        'width': rectBaseData['width'],
+        'height': rectBaseData['height'],
+
+    })
     if (rectBaseData['isFill']) {
         simpleRect.setAttribute('fill', rectBaseData['color']);
         simpleRect.setAttribute('stroke-width', 0);
@@ -304,8 +321,8 @@ function drawSimpleRectCanvas(rectBaseData) {
 }
 
 
-function getAngle(deg) { 
-    return Math.PI * deg / 180; 
+function getAngle(deg) {
+    return Math.PI * deg / 180;
 }
 
 // 绘制圆
@@ -355,6 +372,62 @@ function drawArcCanvas(arcBaseData) {
  *
  * @param {*} arcBaseData
  */
+
+
+
+function biao (tochange) {
+    let angleList = [90,180,270,360];
+    let angleFunc = []
+    for (let index = 0; index < angleList.length; index++) {
+        if (tochang < angleList[index]) {
+
+        }
+        
+    }
+}
+
+function angleToCoordinate () {
+       
+        
+    if (Angle < 90) { // 需要区分四个象限考虑 采用索引访问表
+        x0 = arcBaseData['x'] + arcBaseData['radius'] * Math.cos(arcBaseData['startAngle']);
+        y0 = arcBaseData['y'] + arcBaseData['radius'] * Math.sin(arcBaseData['startAngle']);
+    }
+
+    if (Angle == 90) {
+        x0 = arcBaseData['x'];
+        y0 = arcBaseData['y'] + arcBaseData['radius'];
+    }
+
+    if (Angle > 90 && Angle < 180) {
+        x0 = arcBaseData['x'] - arcBaseData['radius'] * Math.sin(arcBaseData['startAngle']-90);
+        y0 = arcBaseData['y'] + arcBaseData['radius'] * Math.cos(arcBaseData['startAngle']-90);
+    }
+
+    if (Angle == 180) {
+        x0 = arcBaseData['x'] - arcBaseData['radius'];
+        y0 = arcBaseData['y'];
+    }
+
+    if (Angle > 180 && Angle < 270) {
+        
+    }
+
+    if (Angle == 270) {
+        x0 = arcBaseData['x'];
+        y0 = arcBaseData['y'] + arcBaseData['radius'];
+    }
+
+    if (Angle > 270 && Angle < 360) {
+       
+    }
+
+    if (Angle == 360) {
+        return (arcBaseData['x'], arcBaseData['y']);// 这里应该增加一个画圆的
+    }
+    
+}
+
 function drawArcSvg(arcBaseData) {
     // let arcBaseData = {
     //     'x': 0,
@@ -367,10 +440,18 @@ function drawArcSvg(arcBaseData) {
     //     'isOnlyArc': true, // 是否仅绘制弧边
     //     'color': '#000'
     // }
+
     let x0 = arcBaseData['x'] + arcBaseData['radius'] * Math.cos(arcBaseData['startAngle']);
     let y0 = arcBaseData['y'] + arcBaseData['radius'] * Math.sin(arcBaseData['startAngle']);
     let x1 = arcBaseData['x'] + arcBaseData['radius'] * Math.cos(arcBaseData['endAngle']);
     let y1 = arcBaseData['y'] + arcBaseData['radius'] * Math.sin(arcBaseData['endAngle']);
+    let r = arcBaseData['radius'];
+    dValue = `M${x0} ${y0}  A${r} ${r} 0 0 0 ${x1} ${y1}`;
+    let tempPath = makeSVG('path', {
+        'stroke': arcBaseData['color'],
+        'd': dValue
+    });
+    svg.appendChild(tempPath);
 }
 
 function drawSectorSvg(sectorBaseData) {
@@ -379,7 +460,7 @@ function drawSectorSvg(sectorBaseData) {
 }
 
 function drawSectorCanvas(sectorBaseData) {
-    if(sectorBaseData['isFill']) {
+    if (sectorBaseData['isFill']) {
         ctx.fillStyle = sectorBaseData['color'];
         ctx.save();
         ctx.beginPath();
@@ -424,17 +505,17 @@ function drawPolylineCanvas(polylineBaseData) {
     for (let index = 1; index < polylineBaseData['pointList'].length; index++) {
         let pointX = polylineBaseData['pointList'][index][0];
         let pointY = polylineBaseData['pointList'][index][1];
-        ctx.lineTo(pointX,pointY);
-        
+        ctx.lineTo(pointX, pointY);
+
     }
     ctx.stroke();
     ctx.fillStyle = polylineBaseData['color'];
     if (polylineBaseData['isMountNode']) { // 开始圆点绘制
-        for (let index = 0; index < polylineBaseData['pointList'].length; index++) { 
+        for (let index = 0; index < polylineBaseData['pointList'].length; index++) {
             let pointX = polylineBaseData['pointList'][index][0];
             let pointY = polylineBaseData['pointList'][index][1];
             ctx.beginPath();
-            ctx.arc(pointX, pointY, polylineBaseData['lineWidth']+3 ,0 ,Math.PI*2);
+            ctx.arc(pointX, pointY, polylineBaseData['lineWidth'] + 3, 0, Math.PI * 2);
             ctx.fill();
         }
 
@@ -443,28 +524,28 @@ function drawPolylineCanvas(polylineBaseData) {
 }
 
 function drawPolylineSvg(polylineBaseData) {
-    let polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-    // solidLine.setAttribute('x1', lineBaseData['startX']);
-    polyline.setAttribute('fill','none');
-    polyline.setAttribute('stroke-width', lineBaseData['lineWidth']);
-    polyline.setAttribute('stroke', lineBaseData['color']);
     let pointStr = "";
     for (let index = 0; index < polylineBaseData['pointList'].length; index++) {
         pointStr += ' ' + polylineBaseData['pointList'][index][0] + ',' + polylineBaseData['pointList'][index][1];
     }
-    polyline.setAttribute('points', pointStr);
+    let polyline = makeSVG('polyline', {
+        'fill': 'none',
+        'stroke-width': lineBaseData['lineWidth'],
+        'stroke': lineBaseData['color'],
+        'points': pointStr
+    })
     svg.appendChild(polyline);
     if (polylineBaseData['isMountNode']) {
         for (let index = 0; index < polylineBaseData['pointList'].length; index++) {
             let pointX = polylineBaseData['pointList'][index][0];
             let pointY = polylineBaseData['pointList'][index][1];
-            let point = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            point.setAttribute('fill', lineBaseData['color']);
-            point.setAttribute('cx', pointX);
-            point.setAttribute('cy', pointY);
-            point.setAttribute('r', lineBaseData['lineWidth']+3);
+            let point = makeSVG('circle', {
+                'fill': lineBaseData['color'],
+                'cx': pointX,
+                'cy': pointY,
+                'r': lineBaseData['lineWidth'] + 3
+            })
             svg.appendChild(point);
         }
     }
-    
 }

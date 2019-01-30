@@ -36,12 +36,12 @@ function rectTest(isCanvas, isRoundedCorner) {
 
 function arcTest() {
     arcBaseData = {
-        'x': 100,
-        'y': 100,
-        'radius': 50,
-        'startAngle': 0,
-        'endAngle': 270,
-        'anticlockwise': false, // 顺时针还是逆时针
+        'x': 300,
+        'y': 300,
+        'radius': 150,
+        'startAngle': 30,
+        'endAngle': 90,
+        'anticlockwise': true, // 顺时针还是逆时针
         'isFill': false,
         'isOnlyArc': true, // 是否仅绘制弧边
         'color': '#000'
@@ -86,6 +86,6 @@ function polylineTest() {
 // rectTest(false, true);
 // rectTest(false, false);
 
-// arcTest();
+arcTest();
 // sectorTest();
-polylineTest();
+// polylineTest();

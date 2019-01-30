@@ -8,3 +8,4 @@ canvas好用吗
 
 canvas学习途径: canvas api中文网 w3cplus
 
+![](https://html.spec.whatwg.org/images/arc1.png)
