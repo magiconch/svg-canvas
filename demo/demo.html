@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>测试站点</title>
+    <style>
+        #displaysvg {
+            background-color: aqua;
+            height: 300px;
+            width: 400px;
+        }
+
+        #displaycanvas {
+            background-color: brown;
+            height: 300px;
+            width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;">测试小站</h1>
+    <select>
+        <optgroup label="矩形">
+            <option value="普通矩形">普通矩形</option>
+            <option value="圆角矩形">圆角矩形</option>
+        </optgroup>
+        <optgroup label="直线">
+            <option value="实线">实线</option>
+            <option value="虚线">虚线</option>
+        </optgroup>
+        <optgroup label="直线">
+            <option value="实线">实线</option>
+            <option value="虚线">虚线</option>
+        </optgroup>
+        <optgroup label="扇形">
+            <option value="实线">实线</option>
+            <option value="虚线">虚线</option>
+        </optgroup>
+        <optgroup label="直线">
+            <option value="实线">实线</option>
+            <option value="虚线">虚线</option>
+        </optgroup>
+    </select>
+
+    <div id="display">
+        <h2>SVG</h2>
+        <div id="displaysvg"></div>
+        <h2>canvas</h2>
+        <div id="displaycanvas"></div>
+    </div>
+</body>
+
+</html>

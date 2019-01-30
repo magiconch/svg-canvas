@@ -82,6 +82,12 @@ let sectorBaseData = {
     'color': '#fff000'
 }
 
+let polylineBaseData  = {
+    'pointList': [],
+    'isMountNode': true,
+    'color': '#ffff00',
+    'lineWidth': 2
+}
 
 
 
@@ -302,8 +308,6 @@ function getAngle(deg) {
     return Math.PI * deg / 180; 
 }
 
-
-
 // 绘制圆
 function drawArc(arcBaseData, isCanvas) {
     if (isCanvas) {
@@ -382,78 +386,51 @@ function drawSectorCanvas(sectorBaseData) {
     }
 }
 
-function lineTest(isCanvas, isSolid) {
-    lineBaseData['startX'] = 10;
-    lineBaseData['startY'] = 10;
-    lineBaseData['endX'] = 100;
-    lineBaseData['endY'] = 150;
-    lineBaseData['lineWidth'] = 5;
-    lineBaseData['color'] = '#ff0000';
-    lineBaseData['setLineDash'] = [2, 10, 2];
-    if (isSolid) {
-        lineBaseData['startX'] = 50;
-        lineBaseData['startY'] = 50;
-        lineBaseData['endX'] = 150;
-        lineBaseData['endY'] = 200;
+
+function drawPolyline(polylineBaseData, isCanvas) {
+    if (isCanvas) {
+        drawPolylineCanvas(polylineBaseData);
+    } else {
+        drawPolylineSvg(polylineBaseData);
     }
-    drawLine(lineBaseData, isCanvas, isSolid);
 }
 
-function rectTest(isCanvas, isRoundedCorner) {
-    rectBaseData['x'] = 10;
-    rectBaseData['y'] = 10;
-    rectBaseData['width'] = 200;
-    rectBaseData['height'] = 200;
-    rectBaseData['isFill'] = true;
-    rectBaseData['rx'] = 50;
-    rectBaseData['ry'] = 100;
-    if (isRoundedCorner) {
-        rectBaseData['x'] = 300;
-        rectBaseData['y'] = 300;
+
+
+
+/**
+ * @todo 这里需要增加折线
+ *
+ * @param {*} polylineBaseData
+ */
+
+function drawPolylineCanvas(polylineBaseData) {
+    ctx.lineWidth = polylineBaseData['lineWidth'];
+    ctx.strokeStyle = polylineBaseData['color'];
+    ctx.save();
+    ctx.beginPath(); // 开始折线绘制
+    ctx.moveTo(polylineBaseData['pointList'][0][0], polylineBaseData['pointList'][0][1]);
+    for (let index = 1; index < polylineBaseData['pointList'].length; index++) {
+        let pointX = polylineBaseData['pointList'][index][0];
+        let pointY = polylineBaseData['pointList'][index][1];
+        ctx.lineTo(pointX,pointY);
+        
     }
-    drawRect(rectBaseData, isCanvas, isRoundedCorner);
+    ctx.stroke();
+    ctx.fillStyle = polylineBaseData['color'];
+    if (polylineBaseData['isMountNode']) { // 开始圆点绘制
+        for (let index = 0; index < polylineBaseData['pointList'].length; index++) { 
+            let pointX = polylineBaseData['pointList'][index][0];
+            let pointY = polylineBaseData['pointList'][index][1];
+            ctx.beginPath();
+            ctx.arc(pointX, pointY, polylineBaseData['lineWidth']+3 ,0 ,Math.PI*2);
+            ctx.fill();
+        }
+
+    }
+    ctx.restore();
 }
 
-function arcTest() {
-    arcBaseData = {
-        'x': 100,
-        'y': 100,
-        'radius': 50,
-        'startAngle': 0,
-        'endAngle': 270,
-        'anticlockwise': false, // 顺时针还是逆时针
-        'isFill': false,
-        'isOnlyArc': false, // 是否仅绘制弧边
-        'color': '#000'
-    }
-    
-    drawArc(arcBaseData,true);
+function drawPolylineSvg(polylineBaseData) {
 
 }
-
-function sectorTest() {
-    sectorBaseData = {
-        'x': 100,
-        'y': 100,
-        'radius': 50,
-        'startAngle': 0,
-        'endAngle': 360,
-        'anticlockwise': false, // 顺时针还是逆时针
-        'isFill': true,
-        'color': '#000'
-    }
-
-    drawSector(sectorBaseData,true);
-}
-
-// lineTest(true, true);
-// lineTest(true, false);
-// lineTest(false, true);
-// lineTest(false, false);
-// rectTest(true, true);
-// rectTest(true, false);
-// rectTest(false, true);
-// rectTest(false, false);
-
-// arcTest();
-// sectorTest();
