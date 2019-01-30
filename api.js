@@ -1,16 +1,21 @@
-function initDraw() {
-
-}
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
-
+let svg = document.getElementById('svg');
 function initDrawCanvas(canvas, ctx) {
     this.canvas = canvas;
     this.ctx = ctx;
 }
 
-function initDrawSvg() {}
+function initDrawSvg(svg) {
+    this.svg = svg;
+}
 
+function initDraw() {
+    initDrawCanvas(canvas,ctx);
+    initDrawSvg(svg);
+}
+
+initDraw();
 /** 
  * 
  * 
@@ -22,15 +27,63 @@ function initDrawSvg() {}
  * @param {String} color - 线颜色
  * @param {Array} setLineDash - 点划线间距
  */
-lineBaseData = {
+let lineBaseData = {
     'startX': 0,
     'startY': 0,
     'endX': 0,
     'endY': 0,
-    'lineWidth': 0,
+    'lineWidth': 2,
     'color': '#000',
     'setLineDash': []
 }
+
+/**
+ * 
+ * @param {Number} x - 起点x轴坐标 
+ * @param {Number} y - 起点y轴坐标 
+ * @param {Number} width - 矩形宽度
+ * @param {Number} height - 矩形高度
+ * @param {Boolean} isFill - 是否绘制填充，true填充，false设置边框矩形
+ * @param {String} color - 线颜色
+ * @param {Array} rx - x轴上的圆角半径
+ * @param {Number} ry - y轴上的圆角半径
+ */
+let rectBaseData = {
+    'x': 0,
+    'y': 0,
+    'width': 0,
+    'height': 0,
+    'isFill': true,
+    'color': '#FF0000',
+    'rx': 0,
+    'ry': 0
+}
+
+let arcBaseData = {
+    'x': 0,
+    'y': 0,
+    'radius': 5,
+    'startAngle': 0,
+    'endAngle': 0,
+    'anticlockwise': true, // 顺时针还是逆时针
+    'isFill': true,
+    'isOnlyArc': true, // 是否仅绘制弧边
+    'color': '#000'
+}
+
+let sectorBaseData = {
+    'x': 0,
+    'y': 0,
+    'radius': 5,
+    'startAngle': 0,
+    'endAngle': 0,
+    'anticlockwise': true,
+    'isFill': true,
+    'color': '#fff000'
+}
+
+
+
 
 /**
  *
@@ -113,30 +166,6 @@ function drawDashedLineCanvas(lineBaseData) { // 绘制虚线的canvas方法
     ctx.stroke();
     ctx.restore();
 }
-
-
-/**
- * 
- * @param {Number} x - 起点x轴坐标 
- * @param {Number} y - 起点y轴坐标 
- * @param {Number} width - 矩形宽度
- * @param {Number} height - 矩形高度
- * @param {Boolean} isFill - 是否绘制填充，true填充，false设置边框矩形
- * @param {String} color - 线颜色
- * @param {Array} rx - x轴上的圆角半径
- * @param {Number} ry - y轴上的圆角半径
- */
-let rectBaseData = {
-    'x': 0,
-    'y': 0,
-    'width': 0,
-    'height': 0,
-    'isFill': true,
-    'color': '#FF0000',
-    'rx': 0,
-    'ry': 0
-}
-
 
 
 
@@ -268,6 +297,91 @@ function drawSimpleRectCanvas(rectBaseData) {
     ctx.restore();
 }
 
+
+function getAngle(deg) { 
+    return Math.PI * deg / 180; 
+}
+
+
+
+// 绘制圆
+function drawArc(arcBaseData, isCanvas) {
+    if (isCanvas) {
+        drawArcCanvas(arcBaseData);
+    } else {
+        drawArcSvg(arcBaseData);
+    }
+}
+
+// 绘制圆弧
+function drawSector(sectorBaseData, isCanvas) {
+    if (isCanvas) {
+        drawSectorCanvas(sectorBaseData);
+    } else {
+        drawSectorSvg(sectorBaseData);
+    }
+}
+
+function drawArcCanvas(arcBaseData) {
+    if (arcBaseData['isFill']) {
+        ctx.fillStyle = arcBaseData['color'];
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(arcBaseData['x'], arcBaseData['y'], arcBaseData['radius'], getAngle(arcBaseData['startAngle']), getAngle(arcBaseData['endAngle']), arcBaseData['anticlockwise']);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    } else {
+        ctx.strokeStyle = arcBaseData['color'];
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(arcBaseData['x'], arcBaseData['y'], arcBaseData['radius'], getAngle(arcBaseData['startAngle']), getAngle(arcBaseData['endAngle']), arcBaseData['anticlockwise']);
+        if (arcBaseData['isOnlyArc']) {
+
+        } else {
+            ctx.closePath();
+        }
+        ctx.stroke();
+        ctx.restore();
+    }
+
+}
+/**
+ * @todo 完成svg的圆形部分
+ *
+ * @param {*} arcBaseData
+ */
+function drawArcSvg(arcBaseData) {
+    
+}
+
+function drawSectorSvg(sectorBaseData) {
+
+
+}
+
+function drawSectorCanvas(sectorBaseData) {
+    if(sectorBaseData['isFill']) {
+        ctx.fillStyle = sectorBaseData['color'];
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(sectorBaseData['x'], sectorBaseData['y'], sectorBaseData['radius'], getAngle(sectorBaseData['startAngle']), getAngle(sectorBaseData['endAngle']), sectorBaseData['anticlockwise']);
+        ctx.lineTo(sectorBaseData['x'], sectorBaseData['y']);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    } else {
+        ctx.strokeStyle = sectorBaseData['color'];
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(sectorBaseData['x'], sectorBaseData['y'], sectorBaseData['radius'], getAngle(sectorBaseData['startAngle']), getAngle(sectorBaseData['endAngle']), sectorBaseData['anticlockwise']);
+        ctx.lineTo(sectorBaseData['x'], sectorBaseData['y']);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.restore();
+    }
+}
+
 function lineTest(isCanvas, isSolid) {
     lineBaseData['startX'] = 10;
     lineBaseData['startY'] = 10;
@@ -300,13 +414,46 @@ function rectTest(isCanvas, isRoundedCorner) {
     drawRect(rectBaseData, isCanvas, isRoundedCorner);
 }
 
-function arcTest() {}
+function arcTest() {
+    arcBaseData = {
+        'x': 100,
+        'y': 100,
+        'radius': 50,
+        'startAngle': 0,
+        'endAngle': 270,
+        'anticlockwise': false, // 顺时针还是逆时针
+        'isFill': false,
+        'isOnlyArc': false, // 是否仅绘制弧边
+        'color': '#000'
+    }
+    
+    drawArc(arcBaseData,true);
+
+}
+
+function sectorTest() {
+    sectorBaseData = {
+        'x': 100,
+        'y': 100,
+        'radius': 50,
+        'startAngle': 0,
+        'endAngle': 360,
+        'anticlockwise': false, // 顺时针还是逆时针
+        'isFill': true,
+        'color': '#000'
+    }
+
+    drawSector(sectorBaseData,true);
+}
 
 // lineTest(true, true);
 // lineTest(true, false);
 // lineTest(false, true);
 // lineTest(false, false);
-rectTest(true, true);
-rectTest(true, false);
-rectTest(false, true);
-rectTest(false, false);
+// rectTest(true, true);
+// rectTest(true, false);
+// rectTest(false, true);
+// rectTest(false, false);
+
+// arcTest();
+// sectorTest();

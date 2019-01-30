@@ -1,0 +1,24 @@
+<html lang="en-US"> 
+<canvas id=myCanvas width=500px height=500px></canvas> 
+   
+<script> 
+    var myCanvas = document.getElementById("myCanvas"); 
+    var context = myCanvas.getContext("2d"); 
+       
+    context.fillStyle = "#e4e4e4"; 
+    context.fillRect(0,0,500,500); 
+   
+    context.beginPath(); 
+       
+    context.moveTo(100,100); 
+    context.lineTo(200,100); 
+    context.strokeStyle = "red"; 
+    // context.stroke(); 
+   
+    // context.beginPath(); 
+    context.moveTo(100,200); 
+    context.lineTo(200,200); 
+    context.strokeStyle = "blue"; 
+    context.stroke(); 
+</script> 
+</html> 
