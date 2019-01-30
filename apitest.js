@@ -1,6 +1,6 @@
 
 // 引入待测试函数
-document.write("<script type='text/javascript' src='b.js'></script>");
+// document.write("<script type='text/javascript' src='api.js'></script>");
 
 function lineTest(isCanvas, isSolid) {
     lineBaseData['startX'] = 10;
@@ -74,18 +74,18 @@ function polylineTest() {
         'color': '#fff00',
         'lineWidth': 1
     }
-    drawPolyline(polylineBaseData,true);
+    drawPolyline(polylineBaseData,false);
 }
 
 // lineTest(true, true);
 // lineTest(true, false);
 // lineTest(false, true);
 // lineTest(false, false);
-rectTest(true, true);
-rectTest(true, false);
-rectTest(false, true);
-rectTest(false, false);
+// rectTest(true, true);
+// rectTest(true, false);
+// rectTest(false, true);
+// rectTest(false, false);
 
 // arcTest();
 // sectorTest();
-// polylineTest();
+polylineTest();

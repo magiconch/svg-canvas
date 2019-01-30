@@ -18,13 +18,46 @@
             height: 300px;
             width: 400px;
         }
+        label,
+        input,
+        button {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .wrapper div {
+            margin: 10px 0;
+        }
+        input[type="number"] {
+            border:1px solid #ccc;
+            border-radius: 3px;
+            padding: 3px 5px;
+            width: 50px;
+        }
+        input[type="number"]:focus {
+            outline: none 0;
+            border-color: #008fb5;
+            box-shadow: 0 0 3px #008fb5;
+        }
+        button {
+            border-radius: 3px;
+            border: none;
+            background: #008fb5;
+            color: #fff;
+            padding: 5px 10px;
+            cursor: pointer;
+            box-shadow: 0 1px 0 rgba(0,0,0,.1) ,0 1px 0 rgba(0,0,0,.1);
+        }
+        button:focus,
+        button:active {
+            outline: none 0;
+        }
     </style>
 </head>
 
 <body>
     <h1 style="text-align: center;">测试小站</h1>
     <select>
-        <optgroup label="矩形">
+        <optgroup label="矩形" id="">
             <option value="普通矩形">普通矩形</option>
             <option value="圆角矩形">圆角矩形</option>
         </optgroup>
@@ -46,12 +79,23 @@
         </optgroup>
     </select>
 
+    <div>
+        <label for="num">边数：</label>
+        <input type="number" name="num" value="3" id="num">
+        <label for="radius">半径：</label>
+        <input type="number" name="radius" value="100" id="radius">
+        <label for="arcBox">是否填充</label>
+        <input type="checkbox" name="arcBox" id="arcBox">
+        <button type="button" name="draw" id="draw">Draw</button>
+    </div>
+
     <div id="display">
         <h2>SVG</h2>
         <div id="displaysvg"></div>
         <h2>canvas</h2>
         <div id="displaycanvas"></div>
     </div>
+    <script async src="//jsrun.net/a9pKp/embed/all/light/"></script>
 </body>
 
 </html>

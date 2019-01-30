@@ -57,4 +57,3 @@ context.lineTo(300,300);
     context.fill();
     context.stroke();
 context.stroke();
-

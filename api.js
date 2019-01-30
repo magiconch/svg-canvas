@@ -396,8 +396,6 @@ function drawPolyline(polylineBaseData, isCanvas) {
 }
 
 
-
-
 /**
  * @todo 这里需要增加折线
  *
@@ -432,5 +430,28 @@ function drawPolylineCanvas(polylineBaseData) {
 }
 
 function drawPolylineSvg(polylineBaseData) {
-
+    let polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+    // solidLine.setAttribute('x1', lineBaseData['startX']);
+    polyline.setAttribute('fill','none');
+    polyline.setAttribute('stroke-width', lineBaseData['lineWidth']);
+    polyline.setAttribute('stroke', lineBaseData['color']);
+    let pointStr = "";
+    for (let index = 0; index < polylineBaseData['pointList'].length; index++) {
+        pointStr += ' ' + polylineBaseData['pointList'][index][0] + ',' + polylineBaseData['pointList'][index][1];
+    }
+    polyline.setAttribute('points', pointStr);
+    svg.appendChild(polyline);
+    if (polylineBaseData['isMountNode']) {
+        for (let index = 0; index < polylineBaseData['pointList'].length; index++) {
+            let pointX = polylineBaseData['pointList'][index][0];
+            let pointY = polylineBaseData['pointList'][index][1];
+            let point = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            point.setAttribute('fill', lineBaseData['color']);
+            point.setAttribute('cx', pointX);
+            point.setAttribute('cy', pointY);
+            point.setAttribute('r', lineBaseData['lineWidth']+3);
+            svg.appendChild(point);
+        }
+    }
+    
 }
