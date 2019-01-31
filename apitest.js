@@ -70,11 +70,11 @@ function sectorTest() {
 function polylineTest() {
     polylineBaseData  = {
         'pointList': [[10,10], [50,50],[100,80],[200, 200]],
-        'isMountNode': true,
+        'isMountNode': false,
         'color': '#fff00',
         'lineWidth': 1
     }
-    drawPolyline(polylineBaseData,false);
+    drawPolyline(polylineBaseData,true);
 }
 
 // lineTest(true, true);
@@ -86,6 +86,6 @@ function polylineTest() {
 // rectTest(false, true);
 // rectTest(false, false);
 
-arcTest();
+// arcTest();
 // sectorTest();
-// polylineTest();
+polylineTest();

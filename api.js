@@ -429,17 +429,6 @@ function angleToCoordinate () {
 }
 
 function drawArcSvg(arcBaseData) {
-    // let arcBaseData = {
-    //     'x': 0,
-    //     'y': 0,
-    //     'radius': 5,
-    //     'startAngle': 0,
-    //     'endAngle': 0,
-    //     'anticlockwise': true, // 顺时针还是逆时针
-    //     'isFill': true,
-    //     'isOnlyArc': true, // 是否仅绘制弧边
-    //     'color': '#000'
-    // }
 
     let x0 = arcBaseData['x'] + arcBaseData['radius'] * Math.cos(arcBaseData['startAngle']);
     let y0 = arcBaseData['y'] + arcBaseData['radius'] * Math.sin(arcBaseData['startAngle']);
